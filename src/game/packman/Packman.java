@@ -11,6 +11,8 @@ public class Packman extends Canvas implements Runnable {
     private Graphics g;
     private BufferStrategy bs;
     private boolean running = false;
+    public static int width;
+    public static int height;
 
     private GameComponent game;
 
@@ -22,8 +24,10 @@ public class Packman extends Canvas implements Runnable {
 
     @Override
     public void run() {
+        width = 800;
+        height = 630;
         window = new JFrame("Packman");
-        window.setSize(800, 600);
+        window.setSize(width, height);
         window.setLocationRelativeTo(null);
         window.setResizable(false);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -28,8 +28,8 @@ public abstract class Layer implements Comparable<Layer>{
 
     @Override
     public int compareTo(Layer o) {
-//       int renderOrder = ()
+       int renderOrder = ((Layer) o).GetRenderOrder();
 
-        return 1;
+        return m_RenderOrder - renderOrder;
     }
 }
