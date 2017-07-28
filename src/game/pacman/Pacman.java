@@ -1,10 +1,10 @@
-package game.packman;
+package game.pacman;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class Packman extends Canvas implements Runnable {
+public class Pacman extends Canvas implements Runnable {
 
     private Thread thread;
     private JFrame window;
@@ -16,7 +16,7 @@ public class Packman extends Canvas implements Runnable {
 
     private GameComponent game;
 
-    public Packman() {
+    public Pacman() {
         thread = new Thread(this, "Packman");
         thread.start();
     }
@@ -83,7 +83,6 @@ public class Packman extends Canvas implements Runnable {
      * MAIN METHOD
      */
     public static void main(String args[]) {
-        new Packman();
+        new Pacman();
     }
-
 }

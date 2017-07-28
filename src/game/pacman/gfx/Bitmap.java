@@ -1,9 +1,7 @@
-package game.packman.gfx;
+package game.pacman.gfx;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
@@ -37,7 +35,7 @@ public class Bitmap {
     public void Draw(int x, int y, Graphics g) {
         g.drawImage(image, x, y, null);
     }
-    
+
     private int[] LoadImage(String filepath) {
         int[] pixels = null;
 

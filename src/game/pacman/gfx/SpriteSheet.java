@@ -1,4 +1,4 @@
-package game.packman.gfx;
+package game.pacman.gfx;
 
 public class SpriteSheet {
 

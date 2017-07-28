@@ -1,4 +1,4 @@
-package game.packman;
+package game.pacman;
 
 public class Game extends GameComponent {
 

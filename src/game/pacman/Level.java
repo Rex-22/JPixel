@@ -1,8 +1,7 @@
-package game.packman;
+package game.pacman;
 
-import game.packman.gfx.Bitmap;
-import game.packman.gfx.Sprite;
-import game.packman.gfx.SpriteSheet;
+import game.pacman.gfx.Sprite;
+import game.pacman.gfx.SpriteSheet;
 
 import java.awt.*;
 

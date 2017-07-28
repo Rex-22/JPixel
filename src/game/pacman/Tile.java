@@ -1,6 +1,6 @@
-package game.packman;
+package game.pacman;
 
-import game.packman.gfx.Sprite;
+import game.pacman.gfx.Sprite;
 
 import java.awt.*;
 

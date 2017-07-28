@@ -1,6 +1,6 @@
-package game.packman;
+package game.pacman;
 
-import game.packman.gfx.Layer;
+import game.pacman.gfx.Layer;
 
 import java.awt.*;
 import java.util.ArrayList;

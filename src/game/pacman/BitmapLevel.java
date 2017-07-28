@@ -1,9 +1,8 @@
-package game.packman;
+package game.pacman;
 
-import game.packman.gfx.Bitmap;
+import game.pacman.gfx.Bitmap;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class BitmapLevel extends Level {
 
