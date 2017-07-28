@@ -14,7 +14,7 @@ public abstract class Layer implements Comparable<Layer>{
 
     public void Init(){}
 
-    public void Render(Graphics g){}
+    public void Draw(Graphics g){}
 
     public void Update(){}
 

@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Level {
 
-    private Tile[] tiles;
+    protected Tile[] tiles;
 
     private int width, height;
 
@@ -22,8 +22,6 @@ public class Level {
         this.width = width;
         this.height = height;
         tiles = new Tile[width * height];
-
-        GenerateLevel();
     }
 
     public void GenerateLevel() {
@@ -34,9 +32,10 @@ public class Level {
         }
     }
 
-    public void Render(Graphics g) {
+    public void Draw(Graphics g) {
         for (int i = 0; i < tiles.length; i++) {
-            tiles[i].Draw(g);
+            if (tiles[i] != null)
+                tiles[i].Draw(g);
         }
     }
 

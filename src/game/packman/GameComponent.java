@@ -30,7 +30,7 @@ public abstract class GameComponent {
 
     public void Render(Graphics g){
         for (Layer layer : m_LayerStack) {
-            layer.Render(g);
+            layer.Draw(g);
         }
     }
 

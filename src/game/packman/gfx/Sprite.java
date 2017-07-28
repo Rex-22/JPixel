@@ -15,10 +15,10 @@ public class Sprite {
 
     /**
      * @param sheet The sprite sheet that will be used to load the sprites form
-     * @param x The X coordinate the sprite is located on in the sprite sheet
-     * @param y The Y coordinate the sprite is located on in the sprite sheet
-     * @param size The size in pixels of the sprite, this will be used to offset
-     *             the x and y coordinates
+     * @param x     The X coordinate the sprite is located on in the sprite sheet
+     * @param y     The Y coordinate the sprite is located on in the sprite sheet
+     * @param size  The size in pixels of the sprite, this will be used to offset
+     *              the x and y coordinates
      */
     public Sprite(SpriteSheet sheet, int x, int y, int size) {
         this.sheet = sheet;
@@ -55,4 +55,5 @@ public class Sprite {
     public void Draw(int x, int y, Graphics g) {
         sprite.Draw(x, y, g);
     }
+
 }
