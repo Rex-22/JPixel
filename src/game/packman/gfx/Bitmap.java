@@ -1,14 +1,10 @@
 package game.packman.gfx;
 
-import game.packman.Packman;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
+import java.awt.image.DataBufferInt;
 import java.io.File;
-
-import static java.awt.Image.SCALE_AREA_AVERAGING;
 
 public class Bitmap {
 
@@ -27,14 +23,16 @@ public class Bitmap {
         this.width = width;
         this.height = height;
         this.type = BufferedImage.TYPE_INT_RGB;
-
-        pixels = new int[width * height];
-
         image = new BufferedImage(width, height, type);
-        image.setRGB(0, 0, 0xff00ff);
+
+        pixels =  ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+
+        for (int i = 0; i < width * height; i++) {
+            pixels[i] = 0xff00ff;
+        }
     }
 
-    public void Draw(Graphics g, int x, int y){
+    public void Draw(int x, int y, Graphics g){
         g.drawImage(image, x, y, null);
     }
 
