@@ -1,2 +1,2 @@
-# Packman
-A Packman clone mad in pure Java
+# Pacman
+A Pacman clone made in pure Java
