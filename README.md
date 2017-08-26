@@ -1,2 +1,2 @@
-# Pacman
-A Pacman clone made in pure Java
+# JEngine
+A Java Game Engine made with the AWT API
