@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import engine.gfx.Layer;
-import engine.gfx.Sprite;
 
 public abstract class Scene {
 
@@ -38,7 +37,7 @@ public abstract class Scene {
 
     public void Render(Graphics g){
         for (Layer layer : m_LayerStack) {
-            layer.Draw(g);
+            layer.Render(g);
         }
     }
 

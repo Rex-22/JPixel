@@ -1,7 +1,5 @@
 package engine.core;
 
-import sandbox.Game;
-
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -12,48 +10,48 @@ import javax.swing.WindowConstants;
 @SuppressWarnings("serial")
 public class CoreEngine extends Canvas implements Runnable {
 
-    private Thread thread;
-    private JFrame window;
+    private Thread m_Thread;
+    private JFrame m_Window;
     private Graphics g;
     private BufferStrategy bs;
-    private boolean running = false;
-    public static int width;
-    public static int height;
+    private boolean m_Running = false;
+    public static int m_Width;
+    public static int m_Height;
 
-    private Scene scene;
+    private Scene m_Scene;
 
     public CoreEngine(Scene scene) {
-    	this.scene = scene;
+    	this.m_Scene = scene;
     }
 
     public CoreEngine(){}
 
-    public void start() {
-    	thread = new Thread(this, "Packman");
-        thread.start();
+    public void Start() {
+    	m_Thread = new Thread(this, "Packman");
+        m_Thread.start();
     }
 
     @Override
     public void run() {
-        width = 800;
-        height = 630;
-        window = new JFrame("Packman");
-        window.setSize(width, height);
-        window.setLocationRelativeTo(null);
-        window.setResizable(false);
-        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.add(this);
+        m_Width = 800;
+        m_Height = 630;
+        m_Window = new JFrame("Packman");
+        m_Window.setSize(m_Width, m_Height);
+        m_Window.setLocationRelativeTo(null);
+        m_Window.setResizable(false);
+        m_Window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        m_Window.add(this);
 
-        window.setVisible(true);
+        m_Window.setVisible(true);
 
-        loop();
+        Loop();
     }
 
-    private void loop() {
+    private void Loop() {
 
         Init();
 
-        while (running) {
+        while (m_Running) {
             Update();
             Render();
         }
@@ -61,15 +59,15 @@ public class CoreEngine extends Canvas implements Runnable {
     }
 
     private void Init() {
-        running = true;
+        m_Running = true;
 
         createBufferStrategy(3);
 
-        if (scene == null){
-            System.err.println("There is no scene currently active!");
+        if (m_Scene == null){
+            System.err.println("There is no m_Scene currently active!");
             System.exit(1);
         }
-        scene.Init();
+        m_Scene.Init();
     }
 
     private void Render() {
@@ -79,11 +77,11 @@ public class CoreEngine extends Canvas implements Runnable {
         ClearScreen();
 
 
-        if (scene == null){
-            System.err.println("There is no scene currently active!");
+        if (m_Scene == null){
+            System.err.println("There is no m_Scene currently active!");
             System.exit(1);
         }
-        scene.Render(g);
+        m_Scene.Render(g);
 
         g.dispose();
         bs.show();
@@ -95,16 +93,16 @@ public class CoreEngine extends Canvas implements Runnable {
 
     private void Update() {
 
-        if (scene == null){
-            System.err.println("There is no scene currently active!");
+        if (m_Scene == null){
+            System.err.println("There is no m_Scene currently active!");
             System.exit(1);
         }
 
-    	scene.Update();
+    	m_Scene.Update();
     }
 
 
-    public void setScene(Scene scene) {
-        this.scene = scene;
+    public void SetScene(Scene scene) {
+        this.m_Scene = scene;
     }
 }

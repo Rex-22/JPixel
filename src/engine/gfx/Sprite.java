@@ -6,49 +6,49 @@ import java.awt.*;
 
 public class Sprite {
 
-    private SpriteSheet sheet;
+    private SpriteSheet m_Sheet;
 
-    private Transform transform;
+    private Transform m_Transform;
 
-    private Bitmap sprite;
+    private Bitmap m_Sprite;
 
     /**
-     * @param sheet The sprite sheet that will be used to load the sprites form
-     * @param sheetX The x location on the sprite sheet of the current sprite
-     * @param sheetY The y location on the sprite sheet of the current sprite
+     * @param sheet The m_Sprite sheet that will be used to load the sprites form
+     * @param sheetX The x location on the m_Sprite sheet of the current m_Sprite
+     * @param sheetY The y location on the m_Sprite sheet of the current m_Sprite
      */
     public Sprite(SpriteSheet sheet, int sheetX, int sheetY) {
-        this.sheet = sheet;
-        sprite = sheet.GetSprite(sheetX, sheetY);
+        this.m_Sheet = sheet;
+        m_Sprite = sheet.GetSprite(sheetX, sheetY);
     }
 
     /**
-     * @param colour    The Colour the sprite will be
-     * @param width     The Width of the sprite
-     * @param height    the Height of the sprite
+     * @param colour    The Colour the m_Sprite will be
+     * @param width     The Width of the m_Sprite
+     * @param height    the Height of the m_Sprite
      */
     public Sprite(int colour, int width, int height) {
-        sprite = new Bitmap(height, width, colour);
+        m_Sprite = new Bitmap(height, width, colour);
     }
 
-    public SpriteSheet getSheet() {
-        return sheet;
+    public SpriteSheet GetSheet() {
+        return m_Sheet;
     }
 
-    public Transform getTransform() {
-        return transform;
+    public Transform GetTransform() {
+        return m_Transform;
     }
 
-    public Bitmap getBitmap() {
-        return sprite;
+    public Bitmap GetBitmap() {
+        return m_Sprite;
     }
 
-    public void Draw(Graphics g) {
-        sprite.Draw(transform.getX(), transform.getY(), g);
+    public void Render(Graphics g) {
+        m_Sprite.Render(m_Transform.GetX(), m_Transform.GetY(), g);
     }
 
-    public void setTransform(Transform transform) {
-        this.transform = transform;
-        sprite.scale(transform.getSize());
+    public void SetTransform(Transform transform) {
+        this.m_Transform = transform;
+        m_Sprite.Scale(transform.GetSize());
     }
 }

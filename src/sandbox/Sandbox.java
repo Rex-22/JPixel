@@ -7,9 +7,9 @@ public class Sandbox {
 	public Sandbox() {
 		CoreEngine engine = new CoreEngine();
 
-		engine.setScene(new Game());
+		engine.SetScene(new Game());
 
-		engine.start();
+		engine.Start();
 	}
 	
     /**

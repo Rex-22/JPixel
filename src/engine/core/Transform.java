@@ -2,7 +2,9 @@ package engine.core;
 
 public class Transform {
 
-    private int x, y, size;
+    private int x;
+    private int y;
+    private int size;
 
     public Transform(int x, int y, int size) {
         this.x = x;
@@ -22,20 +24,20 @@ public class Transform {
         this(0,0);
     }
 
-    public void setPosition(int x, int y){
+    public void SetPosition(int x, int y){
         this.x = x;
         this.y = y;
     }
 
-    public int getX() {
+    public int GetX() {
         return x;
     }
 
-    public int getY() {
+    public int GetY() {
         return y;
     }
 
-    public int getSize() {
+    public int GetSize() {
         return size;
     }
 }

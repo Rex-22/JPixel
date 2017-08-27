@@ -1,7 +1,5 @@
 package engine.gfx;
 
-import com.sun.org.apache.regexp.internal.RE;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,64 +8,64 @@ import java.io.File;
 
 public class Bitmap {
 
-    private int[] pixels;
-    private int width;
-    private int height;
-    private int type;
-    private BufferedImage image;
+    private int[] m_Pixels;
+    private int m_Width;
+    private int m_Height;
+    private int m_Type;
+    private BufferedImage m_Image;
 
     /**
-     * Create a bitmap from a image file
+     * Create a bitmap from a m_Image file
      * 
      * @param filepath The file to load to this bitmap
      */
     public Bitmap(String filepath){
-        pixels = LoadImage(filepath);
+        m_Pixels = LoadImage(filepath);
     }
     
     /**
      * Create a bitmap with one uniform colour
      * 
-     * @param width 	The width of the bitmap
-     * @param height	The height of the bitmap
+     * @param width 	The m_Width of the bitmap
+     * @param height	The m_Height of the bitmap
      * @param colour	The colour of the bitmap
      */
     public Bitmap(int width, int height, int colour) {
-    	this.width = width;
-        this.height = height;
-        this.type = BufferedImage.TYPE_INT_RGB;
-        image = new BufferedImage(width, height, type);
+    	this.m_Width = width;
+        this.m_Height = height;
+        this.m_Type = BufferedImage.TYPE_INT_RGB;
+        m_Image = new BufferedImage(width, height, m_Type);
 
-        pixels =  ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+        m_Pixels =  ((DataBufferInt) m_Image.getRaster().getDataBuffer()).getData();
 
         for (int i = 0; i < width * height; i++) {
-            pixels[i] = colour;
+            m_Pixels[i] = colour;
         }
     }
 
-    public void scale(int width, int height){
-        BufferedImage resized = new BufferedImage(width, height, type);
+    public Bitmap(int width, int height) {
+        this(width, height, 0xff00ff);
+    }
+
+    public void Scale(int width, int height){
+        BufferedImage resized = new BufferedImage(width, height, m_Type);
         Graphics2D g2d = resized.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-        g2d.drawImage(image, 0, 0, width, height,
-                0, 0, this.width, this.height, null);
+        g2d.drawImage(m_Image, 0, 0, width, height,
+                0, 0, this.m_Width, this.m_Height, null);
         g2d.dispose();
 
-        image = resized;
-        this.width = width;
-        this.height = height;
+        m_Image = resized;
+        this.m_Width = width;
+        this.m_Height = height;
     }
 
-    public void scale(int amount){
-        scale(amount, amount);
+    public void Scale(int amount){
+        Scale(amount, amount);
     }
 
-    public Bitmap(int width, int height) {
-    	this(width, height, 0xff00ff);
-    }
-
-    public void Draw(int x, int y, Graphics g) {
-        g.drawImage(image, x, y, null);
+    public void Render(int x, int y, Graphics g) {
+        g.drawImage(m_Image, x, y, null);
     }
 
     private int[] LoadImage(String filepath) {
@@ -76,18 +74,18 @@ public class Bitmap {
         BufferedImage img;
 
         try{
-            img = ImageIO.read(new File("res/"+filepath));
+            img = ImageIO.read(new File("res/assets/"+filepath));
 
-            width = img.getWidth();
-            height = img.getHeight();
-            type = img.getType();
+            m_Width = img.getWidth();
+            m_Height = img.getHeight();
+            m_Type = img.getType();
 
 
-            image = img;
+            m_Image = img;
 
-            pixels = new int[width * height];
+            pixels = new int[m_Width * m_Height];
 
-            img.getRGB(0, 0, width, height, pixels, 0, width);
+            img.getRGB(0, 0, m_Width, m_Height, pixels, 0, m_Width);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -96,18 +94,18 @@ public class Bitmap {
     }
 
     public int GetHeight() {
-        return height;
+        return m_Height;
     }
 
     public int GetWidth() {
-        return width;
+        return m_Width;
     }
 
     public int GetPixel(int x, int y){
-        return pixels[x + y * width];
+        return m_Pixels[x + y * m_Width];
     }
 
     public void SetPixel(int x, int y, int col) {
-        pixels[x + y * width] = col;
+        m_Pixels[x + y * m_Width] = col;
     }
 }

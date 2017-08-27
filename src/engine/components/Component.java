@@ -1,20 +1,33 @@
-package engine;
+package engine.components;
 
-import engine.core.Entity;
+import engine.core.GameObject;
+
 import java.awt.*;
 
-public class Component {
+public abstract class Component{
 
-    public Entity parent;
+    protected GameObject m_Parent;
 
+    private boolean m_Enabled = true;
+
+    public abstract void Init();
     public void Update(){}
     public void Render(Graphics g){}
 
-    public void setParent(Entity entity){
-        this.parent = entity;
+    public void SetParent(GameObject object){
+        this.m_Parent = object;
+        Init();
     }
 
-    public Entity getParent() {
-        return parent;
+    public void SetEnabled(boolean enabled) {
+        this.m_Enabled = enabled;
+    }
+
+    public boolean IsEnabled() {
+        return m_Enabled;
+    }
+
+    public GameObject GetParent() {
+        return m_Parent;
     }
 }

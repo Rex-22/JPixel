@@ -1,39 +1,33 @@
 package engine.gfx;
 
-public class SpriteSheet {
+public class SpriteSheet extends Bitmap{
 
-    private String path;
-    private int width;
-    private int height;
-    private int size;
-    private Bitmap sheet;
+    private int m_Width;
+    private int m_Height;
+    private int m_Size;
 
     public SpriteSheet(String path, int size) {
-        this.path = path;
-        sheet = LoadSheet();
-        width = sheet.GetWidth();
-        height = sheet.GetHeight();
-        this.size = size;
+        super(path);
+        m_Width = this.GetWidth();
+        m_Height = this.GetHeight();
+        this.m_Size = size;
     }
 
-    private Bitmap LoadSheet() {
-       return new Bitmap(path);
-    }
 
     public Bitmap GetSprite(int x, int y, int scaleSize){
-        Bitmap sprite = new Bitmap(size, size);
+        Bitmap sprite = new Bitmap(m_Size, m_Size);
 
-        x = x * size;
-        y = y * size;
+        x = x * m_Size;
+        y = y * m_Size;
 
-        for (int yp = 0; yp < size; yp++) {
-            for (int xp = 0; xp < size; xp++) {
-                sprite.SetPixel(xp, yp, sheet.GetPixel((x + xp), (y + yp)));
+        for (int yp = 0; yp < m_Size; yp++) {
+            for (int xp = 0; xp < m_Size; xp++) {
+                sprite.SetPixel(xp, yp, GetPixel((x + xp), (y + yp)));
             }
         }
 
         if (scaleSize != 0)
-            sprite.scale(scaleSize);
+            sprite.Scale(scaleSize);
 
         return sprite;
     }
@@ -42,12 +36,12 @@ public class SpriteSheet {
         return GetSprite(x, y, 50);
     }
     
-    public int getWidth() {
-		return width;
+    public int GetWidth() {
+		return m_Width;
 	}
     
-    public int getHeight() {
-		return height;
+    public int GetHeight() {
+		return m_Height;
 	}
     
 }
