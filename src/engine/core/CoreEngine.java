@@ -1,5 +1,7 @@
 package engine.core;
 
+import engine.gfx.Window;
+
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -8,47 +10,48 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 @SuppressWarnings("serial")
-public class CoreEngine extends Canvas implements Runnable {
+public class CoreEngine implements Runnable {
 
     private Thread m_Thread;
-    private JFrame m_Window;
-    private Graphics g;
-    private BufferStrategy bs;
+    private Window m_Window;
+
     private boolean m_Running = false;
-    public static int m_Width;
-    public static int m_Height;
 
     private Scene m_Scene;
 
     public CoreEngine(Scene scene) {
-    	this.m_Scene = scene;
+    	this(800, 600, scene);
     }
 
-    public CoreEngine(){}
+    public CoreEngine(int width, int height, Scene scene) {
+        this(width, height, "JEngine", scene);
+    }
+
+    public CoreEngine(int width, int height, String title, Scene scene) {
+        this.m_Scene = scene;
+        m_Window = new Window(title, width, height);
+    }
+
+
+    public CoreEngine(int width, int height, String title) {
+        m_Window = new Window(title, width, height);
+    }
+
+    public CoreEngine(int width, int height) {
+        this(width, height, "JEngine");
+    }
+
+    public CoreEngine() {
+       this(800, 600, "JEngine");
+    }
 
     public void Start() {
-    	m_Thread = new Thread(this, "Packman");
+    	m_Thread = new Thread(this, "JEngine");
         m_Thread.start();
     }
 
     @Override
     public void run() {
-        m_Width = 800;
-        m_Height = 630;
-        m_Window = new JFrame("Packman");
-        m_Window.setSize(m_Width, m_Height);
-        m_Window.setLocationRelativeTo(null);
-        m_Window.setResizable(false);
-        m_Window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        m_Window.add(this);
-
-        m_Window.setVisible(true);
-
-        Loop();
-    }
-
-    private void Loop() {
-
         Init();
 
         while (m_Running) {
@@ -61,37 +64,27 @@ public class CoreEngine extends Canvas implements Runnable {
     private void Init() {
         m_Running = true;
 
-        createBufferStrategy(3);
-
         if (m_Scene == null){
-            System.err.println("There is no m_Scene currently active!");
+            System.err.println("There is no scene currently active!");
             System.exit(1);
         }
         m_Scene.Init();
     }
 
     private void Render() {
-        bs = getBufferStrategy();
-        g = bs.getDrawGraphics();
 
-        ClearScreen();
-
-
-        if (m_Scene == null){
-            System.err.println("There is no m_Scene currently active!");
+        if (m_Scene == null) {
+            System.err.println("There is no scene currently active!");
             System.exit(1);
         }
-        m_Scene.Render(g);
+        m_Scene.Render(m_Window.GetGraphics());
 
-        g.dispose();
-        bs.show();
-    }
-
-    private void ClearScreen() {
-        g.fillRect(0, 0, getWidth(), getHeight());
+        m_Window.Render();
     }
 
     private void Update() {
+
+        m_Window.Update();
 
         if (m_Scene == null){
             System.err.println("There is no m_Scene currently active!");
