@@ -9,7 +9,6 @@ public class TileRenderer extends Component {
 
     private Sprite m_Texture;
 
-
     public TileRenderer(Sprite texture) {
         this.m_Texture = texture;
     }

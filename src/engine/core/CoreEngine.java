@@ -2,13 +2,6 @@ package engine.core;
 
 import engine.gfx.Window;
 
-import java.awt.Canvas;
-import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
-
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
 @SuppressWarnings("serial")
 public class CoreEngine implements Runnable {
 

@@ -1,6 +1,5 @@
 package sandbox;
 
-import engine.components.PixelRenderer;
 import engine.core.Entity;
 import engine.core.Tile;
 import engine.core.Transform;
@@ -23,13 +22,12 @@ public class TestLayer extends Layer {
         tile = new TestTile(new Transform(), sprite1);
         entity = new TestEntity(new Transform(), sprite);
 
-
 		Add(entity);
 		Add(tile);
     }
 
     @Override
     public void Update() {
-        tile.SetPosition(1, 1);
+        tile.SetPosition(0, 0);
     }
 }
