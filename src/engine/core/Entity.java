@@ -5,14 +5,15 @@ import engine.gfx.Sprite;
 
 public abstract class Entity extends GameObject {
 
-    private Sprite m_Sprite;
+    private Sprite m_Texture;
 
-    public Entity(Transform transform, Sprite sprite) {
+    public Entity(Transform transform, Sprite texture) {
         super(transform);
-        AddComponent(new PixelRenderer(sprite));
+        this.m_Texture = texture;
+        AddComponent(new PixelRenderer(texture));
     }
 
     public Sprite GetSprite() {
-        return m_Sprite;
+        return m_Texture;
     }
 }

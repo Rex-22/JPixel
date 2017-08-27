@@ -17,7 +17,7 @@ public class Transform {
     }
 
     public Transform(int size){
-        this(0,0, size);
+        this(0, 0, size);
     }
 
     public Transform(){
@@ -39,5 +39,9 @@ public class Transform {
 
     public int GetSize() {
         return size;
+    }
+
+    public void SetSize(int size) {
+        this.size = size;
     }
 }

@@ -108,4 +108,8 @@ public class Bitmap {
     public void SetPixel(int x, int y, int col) {
         m_Pixels[x + y * m_Width] = col;
     }
+
+    public BufferedImage GetImage() {
+        return m_Image;
+    }
 }

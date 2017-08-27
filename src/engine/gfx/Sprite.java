@@ -31,6 +31,13 @@ public class Sprite {
         m_Sprite = new Bitmap(height, width, colour);
     }
 
+    /**
+     * @param colour    The Colour the m_Sprite will be
+     */
+    public Sprite(int colour) {
+        this(colour, 16, 16);
+    }
+
     public SpriteSheet GetSheet() {
         return m_Sheet;
     }

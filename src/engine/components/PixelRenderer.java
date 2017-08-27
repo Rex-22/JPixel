@@ -6,31 +6,31 @@ import java.awt.*;
 
 public class PixelRenderer extends Component {
 
-    private Sprite m_Sprite;
+    private Sprite m_Texture;
 
-    public PixelRenderer(Sprite sprite){
-        m_Sprite = sprite;
+    public PixelRenderer(Sprite texture){
+        m_Texture = texture;
     }
 
     @Override
     public void Init() {
-        m_Sprite.SetTransform(m_Parent.GetTransform());
+        m_Texture.SetTransform(m_Parent.GetTransform());
     }
 
     @Override
     public void Update() {
         if (m_Parent.HasMoved()){
-            m_Sprite.SetTransform(m_Parent.GetTransform());
+            m_Texture.SetTransform(m_Parent.GetTransform());
         }
     }
 
     @Override
     public void Render(Graphics g) {
-        m_Sprite.Render(g);
+        m_Texture.Render(g);
     }
 
-    public Sprite GetSprite() {
-        return m_Sprite;
+    public Sprite GetTexture() {
+        return m_Texture;
     }
 
 }

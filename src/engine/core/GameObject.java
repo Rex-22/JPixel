@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GameObject {
 
-    private Transform m_Transform;
+    protected Transform m_Transform;
     private Transform m_OldTransform;
 
     protected List<Component> m_Components;
@@ -71,5 +71,9 @@ public class GameObject {
         }
 
         return null;
+    }
+
+    public void SetPosition(int x, int y) {
+        m_Transform.SetPosition(x, y);
     }
 }
