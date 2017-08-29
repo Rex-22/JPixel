@@ -1,6 +1,6 @@
 package sandbox;
 
-import engine.components.MoveComponent;
+import engine.components.SimpleMoveComponent;
 import engine.core.Entity;
 import engine.core.Tile;
 import engine.core.Transform;
@@ -23,7 +23,7 @@ public class TestLayer extends Layer {
         tile = new TestTile(new Transform(), sprite1);
         entity = new TestEntity(new Transform(), sprite);
 
-        entity.AddComponent(new MoveComponent());
+        entity.AddComponent(new SimpleMoveComponent());
 
 		Add(entity);
 //		Add(tile);
