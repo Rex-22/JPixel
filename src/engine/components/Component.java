@@ -16,9 +16,7 @@ public abstract class Component implements EventListener {
     public void Init(){}
     public void OnUpdate(float delta){}
     public void OnRender(Graphics g, Camera camera){}
-    public void OnEvent(Event event) {
-
-    }
+    public void OnEvent(Event event) {}
 
     public void SetParent(GameObject object){
         this.m_Parent = object;

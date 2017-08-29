@@ -16,6 +16,10 @@ public class Transform {
         this(position, 50);
     }
 
+    public Transform(float x, float y){
+        this(new Vector2f(x, y));
+    }
+
     public Transform(int size){
         this(new Vector2f(), size);
     }

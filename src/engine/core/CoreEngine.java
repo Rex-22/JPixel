@@ -20,6 +20,9 @@ public class CoreEngine implements Runnable {
 
     private Scene m_Scene;
 
+    private static int width;
+    private static int height;
+
     public CoreEngine(Scene scene) {
     	this(800, 600, scene);
     }
@@ -32,12 +35,18 @@ public class CoreEngine implements Runnable {
         this.m_Scene = scene;
         m_Window = new Window(title, width, height);
         m_FrameTime = 1.0 / frameRate;
+
+        CoreEngine.width = width;
+        CoreEngine.height = height;
     }
 
 
     public CoreEngine(int width, int height, String title, int frameRate) {
         m_Window = new Window(title, width, height);
         m_FrameTime = 1.0 / frameRate;
+
+        CoreEngine.width = width;
+        CoreEngine.height = height;
     }
 
     public CoreEngine(int width, int height) {
@@ -182,5 +191,13 @@ public class CoreEngine implements Runnable {
 
     public void SetScene(Scene scene) {
         this.m_Scene = scene;
+    }
+
+    public static float GetWidth() {
+        return width;
+    }
+
+    public static int GetHeight() {
+        return height;
     }
 }
