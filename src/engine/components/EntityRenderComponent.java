@@ -19,7 +19,7 @@ public class EntityRenderComponent extends Component {
     }
 
     @Override
-    public void OnUpdate() {
+    public void OnUpdate(float delta) {
         if (m_Parent.HasMoved()){
             m_Texture.SetTransform(m_Parent.GetTransform());
         }

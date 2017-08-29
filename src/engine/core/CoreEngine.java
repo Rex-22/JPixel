@@ -16,6 +16,7 @@ public class CoreEngine implements Runnable {
     private Window m_Window;
 
     private boolean m_Running = false;
+    private double m_FrameTime;
 
     private Scene m_Scene;
 
@@ -24,25 +25,27 @@ public class CoreEngine implements Runnable {
     }
 
     public CoreEngine(int width, int height, Scene scene) {
-        this(width, height, "JEngine", scene);
+        this(width, height, "JEngine", 60, scene);
     }
 
-    public CoreEngine(int width, int height, String title, Scene scene) {
+    public CoreEngine(int width, int height, String title, int frameRate, Scene scene) {
         this.m_Scene = scene;
         m_Window = new Window(title, width, height);
+        m_FrameTime = 1.0 / frameRate;
     }
 
 
-    public CoreEngine(int width, int height, String title) {
+    public CoreEngine(int width, int height, String title, int frameRate) {
         m_Window = new Window(title, width, height);
+        m_FrameTime = 1.0 / frameRate;
     }
 
     public CoreEngine(int width, int height) {
-        this(width, height, "JEngine");
+        this(width, height, "JEngine", 60);
     }
 
     public CoreEngine() {
-       this(800, 600, "JEngine");
+       this(800, 600);
     }
 
     public void Start() {
@@ -52,13 +55,50 @@ public class CoreEngine implements Runnable {
 
     @Override
     public void run() {
+
+        int frames = 0;
+        double frameCounter = 0;
+
         Init();
 
-        while (m_Running) {
-            Update();
-            Render();
-        }
+        double lastTime = Time.GetTime();
+        double unprocessedTime = 0;
 
+        while (m_Running) {
+            boolean render = false;
+
+            double startTime = Time.GetTime();
+            double passedTime = startTime - lastTime;
+            lastTime = startTime;
+
+            unprocessedTime += passedTime;
+            frameCounter += passedTime;
+
+            while (unprocessedTime > m_FrameTime) {
+                render = true;
+
+                Update((float) m_FrameTime);
+
+                if (frameCounter >= 1.0) {
+                    System.out.println(frames);
+                    frames = 0;
+                    frameCounter = 0;
+                }
+            }
+
+
+            if (render) {
+                Render();
+                frames++;
+            } else {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
     }
 
     private void Init() {
@@ -124,7 +164,7 @@ public class CoreEngine implements Runnable {
         m_Window.Render();
     }
 
-    private void Update() {
+    private void Update(float delta) {
 
         m_Window.Update();
 
@@ -133,7 +173,7 @@ public class CoreEngine implements Runnable {
             System.exit(1);
         }
 
-    	m_Scene.OnUpdate();
+    	m_Scene.OnUpdate(delta);
     }
 
     private void DispatchEvent(Event event){

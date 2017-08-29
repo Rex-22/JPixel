@@ -14,7 +14,7 @@ public abstract class Component implements EventListener {
     private boolean m_Enabled = true;
 
     public void Init(){}
-    public void OnUpdate(){}
+    public void OnUpdate(float delta){}
     public void OnRender(Graphics g, Camera camera){}
     public void OnEvent(Event event) {
 

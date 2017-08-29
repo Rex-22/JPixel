@@ -48,9 +48,9 @@ public abstract class Scene implements EventListener{
         }
     }
 
-    public void OnUpdate(){
+    public void OnUpdate(float delta){
         for (Layer layer : m_LayerStack) {
-            layer.OnUpdate();
+            layer.OnUpdate(delta);
         }
     }
 

@@ -45,14 +45,18 @@ public abstract class Layer implements Comparable<Layer>, EventListener {
 		}
     }
 
-    public void OnUpdate() {
+    public void OnUpdate(float delta) {
         for (GameObject object: m_GameObjects) {
-            object.MasterUpdate();
+            object.MasterUpdate(delta);
         }
     }
 
     @Override
-    public void OnEvent(Event event) {}
+    public void OnEvent(Event event) {
+        for (GameObject object: m_GameObjects) {
+            object.OnEvent(event);
+        }
+    }
 
     public void SetRenderOrder(int renderOrder){
         this.m_RenderOrder = renderOrder;

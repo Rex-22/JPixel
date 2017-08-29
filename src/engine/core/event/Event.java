@@ -8,7 +8,7 @@ public class Event {
 		MOUSE_MOVED,
 
 		KEY_PRESSED,
-        KEY_RELEASED
+        KEY_RELEASED,
 	}
 	
 	private Type m_Type;

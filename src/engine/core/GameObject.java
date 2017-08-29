@@ -1,6 +1,7 @@
 package engine.core;
 
 import engine.components.Component;
+import engine.core.event.Event;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,16 +21,22 @@ public class GameObject {
         m_Components = new ArrayList<>();
     }
 
-    public void MasterUpdate() {
+    public void OnEvent(Event event){
+        for (Component comp : m_Components)
+            if (comp.IsEnabled())
+                comp.OnEvent(event);
+    }
+
+    public void MasterUpdate(float delta) {
         if (HasMoved()) {
             m_OldTransform = m_Transform;
         }
 
         for (Component comp : m_Components)
             if (comp.IsEnabled())
-                comp.OnUpdate();
+                comp.OnUpdate(delta);
 
-        Update();
+        OnUpdate(delta);
     }
 
     public void MasterRender(Graphics g, Camera camera) {
@@ -37,13 +44,13 @@ public class GameObject {
             if (comp.IsEnabled())
                 comp.OnRender(g, camera);
 
-        Render(g);
+        OnRender(g);
     }
 
-    public void Update() {
+    public void OnUpdate(float delta) {
     }
 
-    public void Render(Graphics g) {
+    public void OnRender(Graphics g) {
     }
 
     public void AddComponent(Component component) {
