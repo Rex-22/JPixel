@@ -7,8 +7,8 @@ import java.awt.image.BufferStrategy;
 public class Window {
 
     private JFrame m_Window;
-    private int m_Width;
-    private int m_Height;
+    private static int m_Width;
+    private static int m_Height;
 
     private Canvas m_Canvas;
     private Graphics g;
@@ -55,7 +55,24 @@ public class Window {
         return g;
     }
 
-    public Canvas GetHandler() {
+    public Canvas GetRenderTarget() {
         return m_Canvas;
+    }
+
+    public void SetTitle(String title) {
+        this.m_Title = title;
+        m_Window.setTitle(title);
+    }
+
+    public String GetTitle() {
+        return m_Title;
+    }
+
+    public static int GetHeight() {
+        return m_Height;
+    }
+
+    public static int GetWidth() {
+        return m_Width;
     }
 }

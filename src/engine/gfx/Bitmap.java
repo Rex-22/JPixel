@@ -10,8 +10,10 @@ import java.io.File;
 public class Bitmap {
 
     private int[] m_Pixels;
+
     private int m_Width;
     private int m_Height;
+
     private int m_Type;
     private BufferedImage m_Image;
 
@@ -61,12 +63,12 @@ public class Bitmap {
         this.m_Height = height;
     }
 
-    public void Scale(int amount){
+    public void Scale(int amount) {
         Scale(amount, amount);
     }
 
-    public void Render(float x, float y, Graphics g3) {
-        Graphics2D g = (Graphics2D) g3;
+    public void Render(float x, float y, Graphics g3d) {
+        Graphics2D g = (Graphics2D) g3d;
         g.drawImage(m_Image, AffineTransform.getTranslateInstance(x, y), null);
     }
 

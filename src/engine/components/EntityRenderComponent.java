@@ -27,7 +27,7 @@ public class EntityRenderComponent extends Component {
 
     @Override
     public void OnRender(Graphics g, Camera camera) {
-        m_Texture.Render(g, camera);
+        m_Texture.OnRender(g, camera);
     }
 
     public Sprite GetTexture() {

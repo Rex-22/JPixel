@@ -51,7 +51,7 @@ public class Sprite {
         return m_Sprite;
     }
 
-    public void Render(Graphics g, Camera camera) {
+    public void OnRender(Graphics g, Camera camera) {
         m_Sprite.Render(m_Transform.GetX() - camera.GetX(), m_Transform.GetY() - camera.GetY(), g);
     }
 
