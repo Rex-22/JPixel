@@ -1,6 +1,13 @@
 package engine.core;
 
+import engine.core.event.Event;
+import engine.core.event.types.*;
 import engine.gfx.Window;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class CoreEngine implements Runnable {
@@ -57,6 +64,48 @@ public class CoreEngine implements Runnable {
     private void Init() {
         m_Running = true;
 
+        m_Window.GetHandler().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                MousePressedEvent event = new MousePressedEvent(e.getButton(), e.getX(), e.getY());
+                DispatchEvent(event);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                MouseReleasedEvent event = new MouseReleasedEvent(e.getButton(), e.getX(), e.getY());
+                DispatchEvent(event);
+            }
+        });
+
+        m_Window.GetHandler().addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                MouseMovedEvent event = new MouseMovedEvent(e.getX(), e.getY(), false);
+                DispatchEvent(event);
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                MouseMovedEvent event = new MouseMovedEvent(e.getX(), e.getY(), true);
+                DispatchEvent(event);
+            }
+        });
+
+        m_Window.GetHandler().addKeyListener(new KeyAdapter() {
+             @Override
+            public void keyPressed(KeyEvent e) {
+                KeyPressedEvent event = new KeyPressedEvent(e.getKeyCode());
+                DispatchEvent(event);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                KeyReleasedEvent event = new KeyReleasedEvent(e.getKeyCode());
+                DispatchEvent(event);
+            }
+        });
+
         if (m_Scene == null){
             System.err.println("There is no scene currently active!");
             System.exit(1);
@@ -70,7 +119,7 @@ public class CoreEngine implements Runnable {
             System.err.println("There is no scene currently active!");
             System.exit(1);
         }
-        m_Scene.Render(m_Window.GetGraphics());
+        m_Scene.OnRender(m_Window.GetGraphics());
 
         m_Window.Render();
     }
@@ -84,7 +133,11 @@ public class CoreEngine implements Runnable {
             System.exit(1);
         }
 
-    	m_Scene.Update();
+    	m_Scene.OnUpdate();
+    }
+
+    private void DispatchEvent(Event event){
+        m_Scene.OnEvent(event);
     }
 
 

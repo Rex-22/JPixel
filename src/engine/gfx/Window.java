@@ -54,4 +54,8 @@ public class Window {
 
         return g;
     }
+
+    public Canvas GetHandler() {
+        return m_Canvas;
+    }
 }

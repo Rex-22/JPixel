@@ -1,7 +1,7 @@
 package engine.core;
 
+import engine.components.TileRenderComponent;
 import engine.gfx.Sprite;
-import engine.components.TileRenderer;
 
 public abstract class Tile extends GameObject {
 
@@ -10,7 +10,7 @@ public abstract class Tile extends GameObject {
     public Tile(Transform transform, Sprite texture) {
         super(transform);
         this.m_Texture = texture;
-        AddComponent(new TileRenderer(m_Texture));
+        AddComponent(new TileRenderComponent(m_Texture));
     }
 
 }

@@ -1,13 +1,15 @@
 package engine.core;
 
+import engine.core.event.Event;
+import engine.core.event.EventListener;
+import engine.gfx.Layer;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import engine.gfx.Layer;
-
-public abstract class Scene {
+public abstract class Scene implements EventListener{
 
     private List<Layer> m_LayerStack;
 
@@ -28,6 +30,11 @@ public abstract class Scene {
         Collections.sort(m_LayerStack);
     }
 
+    public void OnEvent(Event event){
+        for (Layer layer : m_LayerStack) {
+            layer.OnEvent(event);
+        }
+    }
 
     public void Add(Layer... layers){
         for (Layer l : layers) {
@@ -35,15 +42,15 @@ public abstract class Scene {
         }
     }
 
-    public void Render(Graphics g){
+    public void OnRender(Graphics g){
         for (Layer layer : m_LayerStack) {
-            layer.Render(g);
+            layer.OnRender(g);
         }
     }
 
-    public void Update(){
+    public void OnUpdate(){
         for (Layer layer : m_LayerStack) {
-            layer.Update();
+            layer.OnUpdate();
         }
     }
 

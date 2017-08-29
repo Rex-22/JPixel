@@ -1,6 +1,6 @@
 package engine.core;
 
-import engine.components.EntityRenderer;
+import engine.components.EntityRenderComponent;
 import engine.gfx.Sprite;
 
 public abstract class Entity extends GameObject {
@@ -10,7 +10,7 @@ public abstract class Entity extends GameObject {
     public Entity(Transform transform, Sprite texture) {
         super(transform);
         this.m_Texture = texture;
-        AddComponent(new EntityRenderer(texture));
+        AddComponent(new EntityRenderComponent(texture));
     }
 
     public Sprite GetSprite() {

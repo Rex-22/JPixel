@@ -2,12 +2,14 @@ package engine.gfx;
 
 import engine.core.Camera;
 import engine.core.GameObject;
+import engine.core.event.Event;
+import engine.core.event.EventListener;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Layer implements Comparable<Layer>{
+public abstract class Layer implements Comparable<Layer>, EventListener {
 
     private int m_RenderOrder;
     private Camera m_Camera;
@@ -37,17 +39,20 @@ public abstract class Layer implements Comparable<Layer>{
 
     public abstract void Init();
 
-    public void Render(Graphics g) {
+    public void OnRender(Graphics g) {
     	for (GameObject object: m_GameObjects) {
             object.MasterRender(g, m_Camera);
 		}
     }
 
-    public void Update() {
+    public void OnUpdate() {
         for (GameObject object: m_GameObjects) {
             object.MasterUpdate();
         }
     }
+
+    @Override
+    public void OnEvent(Event event) {}
 
     public void SetRenderOrder(int renderOrder){
         this.m_RenderOrder = renderOrder;

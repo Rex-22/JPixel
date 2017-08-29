@@ -27,7 +27,7 @@ public class GameObject {
 
         for (Component comp : m_Components)
             if (comp.IsEnabled())
-                comp.Update();
+                comp.OnUpdate();
 
         Update();
     }
@@ -35,7 +35,7 @@ public class GameObject {
     public void MasterRender(Graphics g, Camera camera) {
         for (Component comp : m_Components)
             if (comp.IsEnabled())
-                comp.Render(g, camera);
+                comp.OnRender(g, camera);
 
         Render(g);
     }

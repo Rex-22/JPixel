@@ -3,6 +3,8 @@ package sandbox;
 import engine.core.Entity;
 import engine.core.Tile;
 import engine.core.Transform;
+import engine.core.event.Event;
+import engine.core.event.types.KeyPressedEvent;
 import engine.gfx.Layer;
 import engine.gfx.Sprite;
 import engine.gfx.SpriteSheet;
@@ -27,7 +29,15 @@ public class TestLayer extends Layer {
     }
 
     @Override
-    public void Update() {
+    public void OnEvent(Event event) {
+        if (event.GetType() == Event.Type.KEY_PRESSED){
+            KeyPressedEvent e = (KeyPressedEvent) event;
+            System.out.println("You pressed: " + e.GetKey());
+        }
+    }
+
+    @Override
+    public void OnUpdate() {
         tile.SetPosition(0, 0);
     }
 }
