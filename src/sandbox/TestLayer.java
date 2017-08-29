@@ -16,7 +16,7 @@ public class TestLayer extends Layer {
 	public void Init() {
 	    SpriteSheet sheet = new SpriteSheet("spritesheet/spritesheet.png", 16);
 		Sprite sprite = new Sprite(sheet, 0, 0);
-        Sprite sprite1 = new Sprite(0xff00ff);
+        Sprite sprite1 = new Sprite(sheet, 3, 0);
 
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {

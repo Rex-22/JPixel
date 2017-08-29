@@ -6,8 +6,9 @@ import engine.core.event.Event;
 import engine.core.event.EventListener;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Layer implements Comparable<Layer>, EventListener {
 
@@ -27,7 +28,7 @@ public abstract class Layer implements Comparable<Layer>, EventListener {
     protected Layer(Camera camera, int renderOrder){
         this.m_RenderOrder = renderOrder;
         this.m_Camera = camera;
-        this.m_GameObjects = new ArrayList<>();
+        this.m_GameObjects = new CopyOnWriteArrayList<>();
         s_layerCount++;
 
         this.m_Name = "Layer " + s_layerCount;
@@ -40,20 +41,23 @@ public abstract class Layer implements Comparable<Layer>, EventListener {
     public abstract void Init();
 
     public void OnRender(Graphics g) {
-    	for (GameObject object: m_GameObjects) {
+        for (Iterator<GameObject> iterator = m_GameObjects.iterator(); iterator.hasNext(); ) {
+            GameObject object = iterator.next();
             object.MasterRender(g, m_Camera);
-		}
+        }
     }
 
     public void OnUpdate(float delta) {
-        for (GameObject object: m_GameObjects) {
+        for (Iterator<GameObject> iterator = m_GameObjects.iterator(); iterator.hasNext(); ) {
+            GameObject object = iterator.next();
             object.MasterUpdate(delta);
         }
     }
 
     @Override
     public void OnEvent(Event event) {
-        for (GameObject object: m_GameObjects) {
+        for (Iterator<GameObject> iterator = m_GameObjects.iterator(); iterator.hasNext(); ) {
+            GameObject object = iterator.next();
             object.OnEvent(event);
         }
     }

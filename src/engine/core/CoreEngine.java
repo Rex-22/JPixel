@@ -20,9 +20,6 @@ public class CoreEngine implements Runnable {
 
     private Scene m_Scene;
 
-    private static int width;
-    private static int height;
-
     public CoreEngine(Scene scene) {
     	this(800, 600, scene);
     }
@@ -35,18 +32,12 @@ public class CoreEngine implements Runnable {
         this.m_Scene = scene;
         m_Window = new Window(title, width, height);
         m_FrameTime = 1.0 / frameRate;
-
-        CoreEngine.width = width;
-        CoreEngine.height = height;
     }
 
 
     public CoreEngine(int width, int height, String title, int frameRate) {
         m_Window = new Window(title, width, height);
         m_FrameTime = 1.0 / frameRate;
-
-        CoreEngine.width = width;
-        CoreEngine.height = height;
     }
 
     public CoreEngine(int width, int height) {
@@ -112,7 +103,7 @@ public class CoreEngine implements Runnable {
     }
 
     private void Init() {
-        m_Window.GetHandler().addMouseListener(new MouseAdapter() {
+        m_Window.GetRenderTarget().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 MousePressedEvent event = new MousePressedEvent(e.getButton(), e.getX(), e.getY());
@@ -126,7 +117,7 @@ public class CoreEngine implements Runnable {
             }
         });
 
-        m_Window.GetHandler().addMouseMotionListener(new MouseAdapter() {
+        m_Window.GetRenderTarget().addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 MouseMovedEvent event = new MouseMovedEvent(e.getX(), e.getY(), false);
@@ -140,7 +131,7 @@ public class CoreEngine implements Runnable {
             }
         });
 
-        m_Window.GetHandler().addKeyListener(new KeyAdapter() {
+        m_Window.GetRenderTarget().addKeyListener(new KeyAdapter() {
              @Override
             public void keyPressed(KeyEvent e) {
                 KeyPressedEvent event = new KeyPressedEvent(e.getKeyCode());
@@ -158,7 +149,7 @@ public class CoreEngine implements Runnable {
             System.err.println("There is no scene currently active!");
             System.exit(1);
         }
-        m_Scene.Init();
+
     }
 
     private void Render() {
@@ -177,7 +168,7 @@ public class CoreEngine implements Runnable {
         m_Window.Update();
 
         if (m_Scene == null){
-            System.err.println("There is no m_Scene currently active!");
+            System.err.println("There is no Scene currently active!");
             System.exit(1);
         }
 
@@ -190,14 +181,11 @@ public class CoreEngine implements Runnable {
 
 
     public void SetScene(Scene scene) {
-        this.m_Scene = scene;
+        if (m_Scene != null)
+            m_Scene.OnExit();
+
+        m_Scene = scene;
+        m_Scene.SetEngine(this);
     }
 
-    public static float GetWidth() {
-        return width;
-    }
-
-    public static int GetHeight() {
-        return height;
-    }
 }

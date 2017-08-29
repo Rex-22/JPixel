@@ -1,7 +1,7 @@
 package engine.components;
 
 import engine.core.Camera;
-import engine.core.CoreEngine;
+import engine.gfx.Window;
 
 public class CameraFollowComponent extends Component {
 
@@ -22,6 +22,8 @@ public class CameraFollowComponent extends Component {
     }
 
     private void CenterOnPlayer(){
-        m_Camera.SetPosition(m_Parent.GetTransform().GetX() - CoreEngine.GetWidth() / 2, m_Parent.GetTransform().GetY() - CoreEngine.GetHeight() / 2);
+        m_Camera.SetPosition(
+                m_Parent.GetTransform().GetX() - (Window.GetWidth() / 2),
+                m_Parent.GetTransform().GetY() - (Window.GetHeight() / 2));
     }
 }
