@@ -1,5 +1,6 @@
 package engine.components;
 
+import engine.core.Camera;
 import engine.gfx.Sprite;
 
 import java.awt.*;
@@ -25,8 +26,8 @@ public class EntityRenderer extends Component {
     }
 
     @Override
-    public void Render(Graphics g) {
-        m_Texture.Render(g);
+    public void Render(Graphics g, Camera camera) {
+        m_Texture.Render(g, camera);
     }
 
     public Sprite GetTexture() {

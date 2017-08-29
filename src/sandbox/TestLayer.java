@@ -12,7 +12,6 @@ public class TestLayer extends Layer {
     private Entity entity;
     private Tile tile;
 
-
     @Override
 	public void Init() {
 	    SpriteSheet sheet = new SpriteSheet("spritesheet/spritesheet.png", 16);
@@ -21,6 +20,7 @@ public class TestLayer extends Layer {
 
         tile = new TestTile(new Transform(), sprite1);
         entity = new TestEntity(new Transform(), sprite);
+
 
 		Add(entity);
 		Add(tile);

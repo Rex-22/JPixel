@@ -1,5 +1,6 @@
 package engine.gfx;
 
+import engine.core.Camera;
 import engine.core.Transform;
 
 import java.awt.*;
@@ -50,8 +51,8 @@ public class Sprite {
         return m_Sprite;
     }
 
-    public void Render(Graphics g) {
-        m_Sprite.Render(m_Transform.GetX(), m_Transform.GetY(), g);
+    public void Render(Graphics g, Camera camera) {
+        m_Sprite.Render(m_Transform.GetX() - camera.GetX(), m_Transform.GetY() - camera.GetY(), g);
     }
 
     public void SetTransform(Transform transform) {

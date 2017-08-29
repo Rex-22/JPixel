@@ -32,10 +32,10 @@ public class GameObject {
         Update();
     }
 
-    public void MasterRender(Graphics g) {
+    public void MasterRender(Graphics g, Camera camera) {
         for (Component comp : m_Components)
             if (comp.IsEnabled())
-                comp.Render(g);
+                comp.Render(g, camera);
 
         Render(g);
     }
@@ -72,6 +72,8 @@ public class GameObject {
 
         return null;
     }
+
+
 
     public void SetPosition(int x, int y) {
         m_Transform.SetPosition(x, y);

@@ -1,5 +1,6 @@
 package engine.gfx;
 
+import engine.core.Camera;
 import engine.core.GameObject;
 
 import java.awt.*;
@@ -9,7 +10,8 @@ import java.util.List;
 public abstract class Layer implements Comparable<Layer>{
 
     private int m_RenderOrder;
-    
+    private Camera m_Camera;
+
     private List<GameObject> m_GameObjects;
 
     private static int s_layerCount = 0;
@@ -17,20 +19,27 @@ public abstract class Layer implements Comparable<Layer>{
     private String m_Name;
 
     protected Layer(int renderOrder){
-        m_RenderOrder = renderOrder;
-        m_GameObjects = new ArrayList<>();
-        s_layerCount++;
-
-        m_Name = "Layer " + s_layerCount;
+       this(new Camera(0, 0), renderOrder);
     }
 
-    protected Layer(){ this(0); }
+    protected Layer(Camera camera, int renderOrder){
+        this.m_RenderOrder = renderOrder;
+        this.m_Camera = camera;
+        this.m_GameObjects = new ArrayList<>();
+        s_layerCount++;
+
+        this.m_Name = "Layer " + s_layerCount;
+    }
+
+    protected Layer(){
+        this(0);
+    }
 
     public abstract void Init();
 
     public void Render(Graphics g) {
     	for (GameObject object: m_GameObjects) {
-            object.MasterRender(g);
+            object.MasterRender(g, m_Camera);
 		}
     }
 
@@ -56,6 +65,10 @@ public abstract class Layer implements Comparable<Layer>{
         for (GameObject object: objects) {
             Add(object);
         }
+    }
+
+    public Camera GetCamera() {
+        return m_Camera;
     }
 
     @Override

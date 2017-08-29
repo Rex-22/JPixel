@@ -1,5 +1,6 @@
 package engine.components;
 
+import engine.core.Camera;
 import engine.core.GameObject;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ public abstract class Component{
 
     public abstract void Init();
     public void Update(){}
-    public void Render(Graphics g){}
+    public void Render(Graphics g, Camera camera){}
 
     public void SetParent(GameObject object){
         this.m_Parent = object;
