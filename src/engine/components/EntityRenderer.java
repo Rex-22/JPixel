@@ -4,11 +4,11 @@ import engine.gfx.Sprite;
 
 import java.awt.*;
 
-public class PixelRenderer extends Component {
+public class EntityRenderer extends Component {
 
     private Sprite m_Texture;
 
-    public PixelRenderer(Sprite texture){
+    public EntityRenderer(Sprite texture){
         m_Texture = texture;
     }
 
