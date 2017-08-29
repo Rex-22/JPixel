@@ -82,7 +82,7 @@ public class GameObject {
 
 
 
-    public void SetPosition(int x, int y) {
+    public void SetPosition(float x, float y) {
         m_Transform.SetPosition(x, y);
     }
 }

@@ -55,6 +55,7 @@ public class CoreEngine implements Runnable {
 
     @Override
     public void run() {
+        m_Running = true;
 
         int frames = 0;
         double frameCounter = 0;
@@ -77,6 +78,8 @@ public class CoreEngine implements Runnable {
             while (unprocessedTime > m_FrameTime) {
                 render = true;
 
+                unprocessedTime -= m_FrameTime;
+
                 Update((float) m_FrameTime);
 
                 if (frameCounter >= 1.0) {
@@ -85,8 +88,6 @@ public class CoreEngine implements Runnable {
                     frameCounter = 0;
                 }
             }
-
-
             if (render) {
                 Render();
                 frames++;
@@ -97,13 +98,11 @@ public class CoreEngine implements Runnable {
                     e.printStackTrace();
                 }
             }
-
         }
+
     }
 
     private void Init() {
-        m_Running = true;
-
         m_Window.GetHandler().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

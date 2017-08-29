@@ -5,6 +5,7 @@ import engine.core.Transform;
 import engine.gfx.Sprite;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class TileRenderComponent extends Component {
 
@@ -20,11 +21,13 @@ public class TileRenderComponent extends Component {
     }
 
     @Override
-    public void OnRender(Graphics g, Camera camera) {
+    public void OnRender(Graphics g3, Camera camera) {
         Transform parentTrans = m_Parent.GetTransform();
+        Graphics2D g = (Graphics2D) g3;
+
         g.drawImage(m_Texture.GetBitmap().GetImage(),
-                (parentTrans.GetX() * parentTrans.GetSize()) - camera.GetX(),
-                (parentTrans.GetY() * parentTrans.GetSize()) - camera.GetY(), null);
+                AffineTransform.getTranslateInstance((parentTrans.GetX() * parentTrans.GetSize()) - camera.GetX(),
+                (parentTrans.GetY() * parentTrans.GetSize()) - camera.GetY()), null);
     }
 
     public Sprite GetTexture() {

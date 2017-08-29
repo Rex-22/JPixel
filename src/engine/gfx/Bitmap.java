@@ -2,6 +2,7 @@ package engine.gfx;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
@@ -64,8 +65,9 @@ public class Bitmap {
         Scale(amount, amount);
     }
 
-    public void Render(int x, int y, Graphics g) {
-        g.drawImage(m_Image, x, y, null);
+    public void Render(float x, float y, Graphics g3) {
+        Graphics2D g = (Graphics2D) g3;
+        g.drawImage(m_Image, AffineTransform.getTranslateInstance(x, y), null);
     }
 
     private int[] LoadImage(String filepath) {
