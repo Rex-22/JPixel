@@ -2,6 +2,7 @@ package engine.core;
 
 import engine.components.Component;
 import engine.core.event.Event;
+import org.joml.Vector2f;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class GameObject {
 
 
 
-    public void SetPosition(float x, float y) {
-        m_Transform.SetPosition(x, y);
+    public void SetPosition(Vector2f position) {
+        m_Transform.SetPosition(position);
     }
 }

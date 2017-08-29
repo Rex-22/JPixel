@@ -26,7 +26,7 @@ public class TestLayer extends Layer {
         entity.AddComponent(new MoveComponent());
 
 		Add(entity);
-		Add(tile);
+//		Add(tile);
     }
 
     @Override

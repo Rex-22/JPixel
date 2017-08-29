@@ -1,14 +1,14 @@
 package engine.components;
 
-import com.sun.javafx.geom.Vec2f;
 import engine.core.event.Event;
 import engine.core.event.types.KeyEvent;
 import engine.core.event.types.KeyPressedEvent;
 import engine.core.event.types.KeyReleasedEvent;
+import org.joml.Vector2f;
 
 public class MoveComponent extends Component {
 
-    private float m_Speed = 14.6f;
+    private float m_Speed = 50.0f;
 
     boolean FORWARD = false,
             BACK = false,
@@ -40,22 +40,21 @@ public class MoveComponent extends Component {
 
     @Override
     public void OnUpdate(float delta) {
-        Vec2f velocity = new Vec2f(0, 0);
-
+        Vector2f velocity = new Vector2f(0, 0);
 
         if (FORWARD) velocity.y -= 1;
         if (BACK) velocity.y += 1;
         if (LEFT) velocity.x -= 1;
         if (RIGHT) velocity.x += 1;
 
-        velocity.
-
-        Move(xVel * m_Speed * delta, yVel * m_Speed * delta);
+        Move(velocity.mul(m_Speed * delta));
     }
 
-    private void Move(float xAmt, float yAmt) {
-        m_Parent.SetPosition(m_Parent.GetTransform().GetX() + xAmt, m_Parent.GetTransform().GetY() + yAmt);
+    private void Move(Vector2f moveAmt) {
+        m_Parent.GetTransform().GetPosition().add(moveAmt);
     }
+
+
 
 
 }

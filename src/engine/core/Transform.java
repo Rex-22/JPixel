@@ -1,40 +1,43 @@
 package engine.core;
 
+import org.joml.Vector2f;
+
 public class Transform {
 
-    private float x;
-    private float y;
+    private Vector2f m_Position;
     private int size;
 
-    public Transform(int x, int y, int size) {
-        this.x = x;
-        this.y = y;
+    public Transform(Vector2f position, int size) {
+        this.m_Position = position;
         this.size = size;
     }
 
-    public Transform(int x, int y){
-        this(x, y, 50);
+    public Transform(Vector2f position){
+        this(position, 50);
     }
 
     public Transform(int size){
-        this(0, 0, size);
+        this(new Vector2f(), size);
     }
 
     public Transform(){
-        this(0,0);
+        this(new Vector2f());
     }
 
-    public void SetPosition(float x, float y){
-        this.x = x;
-        this.y = y;
+    public void SetPosition(Vector2f position){
+        this.m_Position = position;
     }
 
     public float GetX() {
-        return x;
+        return m_Position.x;
     }
 
     public float GetY() {
-        return y;
+        return m_Position.y;
+    }
+
+    public Vector2f GetPosition() {
+        return m_Position;
     }
 
     public int GetSize() {
