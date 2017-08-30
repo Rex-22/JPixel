@@ -106,13 +106,13 @@ public class CoreEngine implements Runnable {
         m_Window.GetRenderTarget().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                MousePressedEvent event = new MousePressedEvent(e.getButton(), e.getX(), e.getY());
+                MousePressedEvent event = new MousePressedEvent(e.getButton(), e.getX(), e.getY(), e.getXOnScreen(), e.getYOnScreen());
                 DispatchEvent(event);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                MouseReleasedEvent event = new MouseReleasedEvent(e.getButton(), e.getX(), e.getY());
+                MouseReleasedEvent event = new MouseReleasedEvent(e.getButton(), e.getX(), e.getY(), e.getXOnScreen(), e.getYOnScreen());
                 DispatchEvent(event);
             }
         });
@@ -120,13 +120,13 @@ public class CoreEngine implements Runnable {
         m_Window.GetRenderTarget().addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
-                MouseMovedEvent event = new MouseMovedEvent(e.getX(), e.getY(), false);
+                MouseMovedEvent event = new MouseMovedEvent(e.getX(), e.getY(), e.getXOnScreen(), e.getYOnScreen(), false);
                 DispatchEvent(event);
             }
 
             @Override
             public void mouseDragged(MouseEvent e) {
-                MouseMovedEvent event = new MouseMovedEvent(e.getX(), e.getY(), true);
+                MouseMovedEvent event = new MouseMovedEvent(e.getX(), e.getY(), e.getXOnScreen(), e.getYOnScreen(), true);
                 DispatchEvent(event);
             }
         });

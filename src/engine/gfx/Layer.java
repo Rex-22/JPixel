@@ -1,21 +1,15 @@
 package engine.gfx;
 
 import engine.core.Camera;
-import engine.core.GameObject;
 import engine.core.event.Event;
 import engine.core.event.EventListener;
 
 import java.awt.*;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Layer implements Comparable<Layer>, EventListener {
 
     private int m_RenderOrder;
     private Camera m_Camera;
-
-    private List<GameObject> m_GameObjects;
 
     private static int s_layerCount = 0;
 
@@ -28,7 +22,6 @@ public abstract class Layer implements Comparable<Layer>, EventListener {
     protected Layer(Camera camera, int renderOrder){
         this.m_RenderOrder = renderOrder;
         this.m_Camera = camera;
-        this.m_GameObjects = new CopyOnWriteArrayList<>();
         s_layerCount++;
 
         this.m_Name = "Layer " + s_layerCount;
@@ -38,29 +31,10 @@ public abstract class Layer implements Comparable<Layer>, EventListener {
         this(0);
     }
 
-    public abstract void Init();
-
-    public void OnRender(Graphics g) {
-        for (Iterator<GameObject> iterator = m_GameObjects.iterator(); iterator.hasNext(); ) {
-            GameObject object = iterator.next();
-            object.MasterRender(g, m_Camera);
-        }
-    }
-
-    public void OnUpdate(float delta) {
-        for (Iterator<GameObject> iterator = m_GameObjects.iterator(); iterator.hasNext(); ) {
-            GameObject object = iterator.next();
-            object.MasterUpdate(delta);
-        }
-    }
-
-    @Override
-    public void OnEvent(Event event) {
-        for (Iterator<GameObject> iterator = m_GameObjects.iterator(); iterator.hasNext(); ) {
-            GameObject object = iterator.next();
-            object.OnEvent(event);
-        }
-    }
+    public void OnInit() {}
+    public void OnRender(Graphics g) {}
+    public void OnUpdate(float delta) {}
+    public void OnEvent(Event event) {}
 
     public void SetRenderOrder(int renderOrder){
         this.m_RenderOrder = renderOrder;
@@ -68,16 +42,6 @@ public abstract class Layer implements Comparable<Layer>, EventListener {
 
     public int GetRenderOrder() {
         return m_RenderOrder;
-    }
-    
-    public void Add(GameObject object) {
-    	m_GameObjects.add(object);
-    }
-
-    public void Add(GameObject... objects){
-        for (GameObject object: objects) {
-            Add(object);
-        }
     }
 
     public Camera GetCamera() {

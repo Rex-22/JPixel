@@ -4,18 +4,18 @@ import engine.components.CameraFollowComponent;
 import engine.components.SimpleMoveComponent;
 import engine.core.Entity;
 import engine.core.Transform;
-import engine.gfx.Layer;
+import engine.gfx.GameLayer;
 import engine.gfx.Sprite;
 import engine.gfx.SpriteSheet;
 
-public class TestLayer extends Layer {
+public class TestLayer extends GameLayer {
 
     private Entity entity;
 
     @Override
-	public void Init() {
+	public void OnInit() {
 	    SpriteSheet sheet = new SpriteSheet("spritesheet/spritesheet.png", 16);
-		Sprite sprite = new Sprite(sheet, 0, 0);
+		Sprite sprite = new Sprite(("player/player.png"));
         Sprite sprite1 = new Sprite(sheet, 3, 0);
 
         for (int y = 0; y < 9; y++) {

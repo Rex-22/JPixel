@@ -1,10 +1,11 @@
 package sandbox;
 
 import engine.core.Scene;
-import engine.core.SceneManager;
 import engine.core.event.Event;
 import engine.core.event.types.KeyEvent;
 import engine.core.event.types.KeyPressedEvent;
+import engine.gfx.GameLayer;
+import engine.gfx.GuiLayer;
 import engine.gfx.Window;
 
 import java.awt.*;
@@ -13,17 +14,17 @@ public class Game extends Scene {
 
 	@Override
 	public void OnInit() {
-		TestLayer layer1 = new TestLayer();
+        GuiLayer guiLayer = new TestUI();
+		GameLayer gameLayer = new TestLayer();
 
-		Add(layer1);
+		Add(guiLayer);
+		Add(gameLayer);
 	}
 
 	@Override
 	public void OnEvent(Event event) {
         if(event.GetType() == Event.Type.KEY_PRESSED) {
-            if(((KeyPressedEvent) event).GetKey() == KeyEvent.KEY_Y) GetEngine().SetScene(SceneManager.TEST_SCENE);
             if(((KeyPressedEvent) event).GetKey() == KeyEvent.KEY_P) Enabled(!IsEnabled());
-
         }
 		super.OnEvent(event);
 	}

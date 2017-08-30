@@ -27,7 +27,7 @@ public abstract class Scene implements EventListener {
     public void Add(Layer layer) {
         if (!m_LayerStack.contains(layer)) {
             m_LayerStack.add(layer);
-            layer.Init();
+            layer.OnInit();
         } else
             System.err.println("Layer is already registered: " + layer);
 

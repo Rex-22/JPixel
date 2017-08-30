@@ -14,6 +14,10 @@ public class Sprite {
     private Bitmap m_Sprite;
 
     /**
+     * This will get a sprite form a sprite sheet
+     *
+     * NOTE: Transparency is a problem with sprite sheets, so transparent sprites might not work
+     *
      * @param sheet The m_Sprite sheet that will be used to load the sprites form
      * @param sheetX The x location on the m_Sprite sheet of the current m_Sprite
      * @param sheetY The y location on the m_Sprite sheet of the current m_Sprite
@@ -24,20 +28,34 @@ public class Sprite {
     }
 
     /**
-     * @param colour    The Colour the m_Sprite will be
-     * @param width     The Width of the m_Sprite
-     * @param height    the Height of the m_Sprite
+     * This will create a sprite with one solid colour with a specified width and height
+     *
+     * @param colour    The Colour the sprite will be
+     * @param width     The Width of the sprite
+     * @param height    the Height of the sprite
      */
     public Sprite(int colour, int width, int height) {
         m_Sprite = new Bitmap(height, width, colour);
     }
 
+
     /**
-     * @param colour    The Colour the m_Sprite will be
+     * This will create a sprite for a given image
+     *
+     *
+     * @param path The path to the image
+     */
+    public Sprite(String path){
+        m_Sprite = new Bitmap(path);
+    }
+
+    /**
+     * @param colour    The Colour the sprite will be
      */
     public Sprite(int colour) {
         this(colour, 16, 16);
     }
+
 
     public SpriteSheet GetSheet() {
         return m_Sheet;

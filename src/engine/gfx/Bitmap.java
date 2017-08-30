@@ -1,15 +1,14 @@
 package engine.gfx;
 
+import org.joml.Vector2f;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 import java.io.File;
 
 public class Bitmap {
-
-    private int[] m_Pixels;
 
     private int m_Width;
     private int m_Height;
@@ -23,7 +22,7 @@ public class Bitmap {
      * @param filepath The file to load to this bitmap
      */
     public Bitmap(String filepath){
-        m_Pixels = LoadImage(filepath);
+        m_Image = LoadImage(filepath);
     }
     
     /**
@@ -39,10 +38,10 @@ public class Bitmap {
         this.m_Type = BufferedImage.TYPE_INT_RGB;
         m_Image = new BufferedImage(width, height, m_Type);
 
-        m_Pixels =  ((DataBufferInt) m_Image.getRaster().getDataBuffer()).getData();
-
-        for (int i = 0; i < width * height; i++) {
-            m_Pixels[i] = colour;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                m_Image.setRGB(x, y, colour);
+            }
         }
     }
 
@@ -63,8 +62,8 @@ public class Bitmap {
         this.m_Height = height;
     }
 
-    public void Scale(int amount) {
-        Scale(amount, amount);
+    public void Scale(Vector2f amount) {
+        Scale((int)amount.x, (int)amount.y);
     }
 
     public void Render(float x, float y, Graphics g3d) {
@@ -72,10 +71,8 @@ public class Bitmap {
         g.drawImage(m_Image, AffineTransform.getTranslateInstance(x, y), null);
     }
 
-    private int[] LoadImage(String filepath) {
-        int[] pixels = null;
-
-        BufferedImage img;
+    private BufferedImage LoadImage(String filepath) {
+        BufferedImage img = null;
 
         try{
             img = ImageIO.read(new File("res/assets/"+filepath));
@@ -84,17 +81,11 @@ public class Bitmap {
             m_Height = img.getHeight();
             m_Type = img.getType();
 
-
-            m_Image = img;
-
-            pixels = new int[m_Width * m_Height];
-
-            img.getRGB(0, 0, m_Width, m_Height, pixels, 0, m_Width);
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return pixels;
+        return img;
     }
 
     public int GetHeight() {
@@ -105,15 +96,11 @@ public class Bitmap {
         return m_Width;
     }
 
-    public int GetPixel(int x, int y){
-        return m_Pixels[x + y * m_Width];
-    }
-
-    public void SetPixel(int x, int y, int col) {
-        m_Pixels[x + y * m_Width] = col;
-    }
-
     public BufferedImage GetImage() {
         return m_Image;
+    }
+
+    protected void SetImage(BufferedImage image) {
+        this.m_Image = image;
     }
 }

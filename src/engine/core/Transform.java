@@ -5,23 +5,19 @@ import org.joml.Vector2f;
 public class Transform {
 
     private Vector2f m_Position;
-    private int size;
+    private Vector2f m_Size;
 
-    public Transform(Vector2f position, int size) {
+    public Transform(Vector2f position, Vector2f size) {
         this.m_Position = position;
-        this.size = size;
+        this.m_Size = size;
     }
 
-    public Transform(Vector2f position){
-        this(position, 50);
+    public Transform(Vector2f position) {
+        this(position, new Vector2f(50, 50));
     }
 
     public Transform(float x, float y){
         this(new Vector2f(x, y));
-    }
-
-    public Transform(int size){
-        this(new Vector2f(), size);
     }
 
     public Transform(){
@@ -44,11 +40,11 @@ public class Transform {
         return m_Position;
     }
 
-    public int GetSize() {
-        return size;
+    public Vector2f GetSize() {
+        return m_Size;
     }
 
-    public void SetSize(int size) {
-        this.size = size;
+    public void SetSize(Vector2f size) {
+        this.m_Size = size;
     }
 }

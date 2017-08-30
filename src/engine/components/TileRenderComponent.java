@@ -26,8 +26,8 @@ public class TileRenderComponent extends Component {
         Graphics2D g = (Graphics2D) g3;
 
         g.drawImage(m_Texture.GetBitmap().GetImage(),
-                AffineTransform.getTranslateInstance((parentTrans.GetX() * parentTrans.GetSize()) - camera.GetX(),
-                (parentTrans.GetY() * parentTrans.GetSize()) - camera.GetY()), null);
+                AffineTransform.getTranslateInstance((parentTrans.GetX() * parentTrans.GetSize().x) - camera.GetX(),
+                (parentTrans.GetY() * parentTrans.GetSize().y) - camera.GetY()), null);
     }
 
     public Sprite GetTexture() {

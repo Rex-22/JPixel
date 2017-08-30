@@ -1,6 +1,6 @@
 package engine.gfx;
 
-public class SpriteSheet extends Bitmap{
+public class SpriteSheet extends Bitmap {
 
     private int m_Width;
     private int m_Height;
@@ -13,27 +13,15 @@ public class SpriteSheet extends Bitmap{
         this.m_Size = size;
     }
 
-
-    public Bitmap GetSprite(int x, int y, int scaleSize){
+    public Bitmap GetSprite(int x, int y) {
         Bitmap sprite = new Bitmap(m_Size, m_Size);
 
         x = x * m_Size;
         y = y * m_Size;
 
-        for (int yp = 0; yp < m_Size; yp++) {
-            for (int xp = 0; xp < m_Size; xp++) {
-                sprite.SetPixel(xp, yp, GetPixel((x + xp), (y + yp)));
-            }
-        }
-
-        if (scaleSize != 0)
-            sprite.Scale(scaleSize);
+        sprite.SetImage(GetImage().getSubimage(x, y, m_Size, m_Size));
 
         return sprite;
-    }
-
-    public Bitmap GetSprite(int x, int y) {
-        return GetSprite(x, y, 50);
     }
     
     public int GetWidth() {

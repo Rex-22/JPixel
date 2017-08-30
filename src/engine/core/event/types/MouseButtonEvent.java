@@ -6,12 +6,15 @@ public class MouseButtonEvent extends Event {
 
 	protected int m_Button;
 	protected int x, y;
+	protected int screenX, screenY;
 	
-	public MouseButtonEvent(int button, int x, int y, Event.Type type) {
+	public MouseButtonEvent(int button, int x, int y, int screenX, int screenY, Event.Type type) {
 		super(type);
 		this.m_Button = button;
 		this.x = x;
 		this.y = y;
+		this.screenX = screenX;
+		this.screenY = screenY;
 	}
 
 	public int GetButton() {
@@ -25,5 +28,12 @@ public class MouseButtonEvent extends Event {
 	public int GetY() {
 		return y;
 	}
-	
+
+    public int GetScreenX() {
+        return screenX;
+    }
+
+    public int GetScreenY() {
+        return screenY;
+    }
 }
