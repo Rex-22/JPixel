@@ -1,6 +1,6 @@
 package engine.core.event;
 
-public interface EventListener {
+public interface IEventListener {
 
 	void OnEvent(Event event);
 	

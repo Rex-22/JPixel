@@ -2,8 +2,8 @@ package engine.core;
 
 import engine.components.Component;
 import engine.core.event.Event;
-import engine.core.event.types.*;
 import org.joml.Vector2f;
+import sandbox.TestEntity;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,10 +29,11 @@ public class GameObject {
     }
 
     public void MasterUpdate(float delta) {
-        if (HasMoved()) {
-            m_OldTransform = m_Transform;
+//        if (HasMoved()) {
+//            m_OldTransform = m_Transform;
+
             m_BoundingBox.setBounds((int)m_Transform.GetX(), (int)m_Transform.GetY(), (int)m_Transform.GetSize().x, (int)m_Transform.GetSize().y);
-        }
+//        }
 
         for (Component comp : m_Components)
             if (comp.IsEnabled())
@@ -54,42 +55,7 @@ public class GameObject {
         for (Component comp : m_Components)
             if (comp.IsEnabled()){
                 comp.OnEvent(event);
-                switch (event.GetType()) {
-                    case KEY_PRESSED:
-                        comp.OnKeyPressedEvent((KeyPressedEvent) event);
-                        break;
-                    case KEY_RELEASED:
-                        comp.OnKeyReleasedEvent((KeyReleasedEvent) event);
-                        break;
-                    case MOUSE_MOVED:
-                        comp.OnMouseMovedEvent((MouseMovedEvent) event);
-                        break;
-                    case MOUSE_PRESSED:
-                        comp.OnMousePressedEvent((MousePressedEvent) event);
-                        break;
-                    case MOUSE_RELEASED:
-                        comp.OnMouseReleasedEvent((MouseReleasedEvent) event);
-                        break;
-                }
             }
-
-        switch (event.GetType()) {
-            case KEY_PRESSED:
-                OnKeyPressedEvent((KeyPressedEvent) event);
-                break;
-            case KEY_RELEASED:
-                OnKeyReleasedEvent((KeyReleasedEvent) event);
-                break;
-            case MOUSE_MOVED:
-                OnMouseMovedEvent((MouseMovedEvent) event);
-                break;
-            case MOUSE_PRESSED:
-                OnMousePressedEvent((MousePressedEvent) event);
-                break;
-            case MOUSE_RELEASED:
-                OnMouseReleasedEvent((MouseReleasedEvent) event);
-                break;
-        }
 
         OnEvent(event);
     }
@@ -112,33 +78,6 @@ public class GameObject {
         m_Components.add(component);
     }
 
-    public void OnKeyPressedEvent(KeyPressedEvent event) {}
-    public void OnKeyReleasedEvent(KeyReleasedEvent event) {}
-
-    public void OnMouseMovedEvent(int x, int y, int screenX, int screenY, boolean dragged) {}
-    public void OnMousePressedEvent(int x, int y, int screenX, int screenY, int button) {}
-    public void OnMouseReleasedEvent(int x, int y, int screenX, int screenY, int button) {}
-
-    private void OnMouseMovedEvent(MouseMovedEvent event) {
-        if(m_BoundingBox.contains(event.GetX(), event.GetY())){
-            OnMouseMovedEvent(event.GetX(), event.GetY(), event.GetScreenX(), event.GetScreenY(), event.GetDragged());
-        }
-    }
-
-    private void OnMousePressedEvent(MousePressedEvent event) {
-        if(m_BoundingBox.contains(event.GetX(), event.GetY())){
-            OnMousePressedEvent(event.GetX(), event.GetY(), event.GetScreenX(), event.GetScreenY(), event.GetButton());
-        }
-    }
-
-    private void OnMouseReleasedEvent(MouseReleasedEvent event) {
-        if(m_BoundingBox.contains(event.GetX(), event.GetY())){
-            OnMouseReleasedEvent(event.GetX(), event.GetY(), event.GetScreenX(), event.GetScreenY(), event.GetButton());
-        }
-    }
-
-
-
     public void SetTransform(Transform transform) {
         this.m_Transform = transform;
     }
@@ -147,8 +86,9 @@ public class GameObject {
         return m_Transform;
     }
 
+    @Deprecated
     public boolean HasMoved() {
-        return m_Transform != m_OldTransform;
+        return false/* !(m_OldTransform.equals(m_Transform))*/;
     }
 
     public <T extends Component> T GetComponent(Class<T> component) {
@@ -160,8 +100,6 @@ public class GameObject {
         return null;
     }
 
-
-
     public void SetPosition(Vector2f position) {
         m_Transform.SetPosition(position);
     }
@@ -169,4 +107,5 @@ public class GameObject {
     public Rectangle GetBoundingBox() {
         return m_BoundingBox;
     }
+
 }

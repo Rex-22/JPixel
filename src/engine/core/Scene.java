@@ -1,7 +1,7 @@
 package engine.core;
 
 import engine.core.event.Event;
-import engine.core.event.EventListener;
+import engine.core.event.IEventListener;
 import engine.gfx.Layer;
 
 import java.awt.*;
@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public abstract class Scene implements EventListener {
+public abstract class Scene implements IEventListener {
 
     private List<Layer> m_LayerStack;
     private CoreEngine m_Engine;
@@ -48,7 +48,6 @@ public abstract class Scene implements EventListener {
     }
 
     public void OnRender(Graphics g) {
-//        if (IsEnabled())
         for (Iterator<Layer> iterator = m_LayerStack.iterator(); iterator.hasNext(); ) {
             Layer layer = iterator.next();
             layer.OnRender(g);

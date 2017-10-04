@@ -5,7 +5,6 @@ import engine.core.event.Event;
 import engine.core.event.types.KeyEvent;
 import engine.core.event.types.KeyPressedEvent;
 import engine.gfx.GameLayer;
-import engine.gfx.GuiLayer;
 import engine.gfx.Window;
 
 import java.awt.*;
@@ -14,10 +13,7 @@ public class Game extends Scene {
 
 	@Override
 	public void OnInit() {
-        GuiLayer guiLayer = new TestUI();
 		GameLayer gameLayer = new TestLayer();
-
-		Add(guiLayer);
 		Add(gameLayer);
 	}
 

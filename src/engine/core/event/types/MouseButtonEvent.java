@@ -2,14 +2,13 @@ package engine.core.event.types;
 
 import engine.core.event.Event;
 
-public class MouseButtonEvent extends Event { 
+public class MouseButtonEvent extends MouseEvent {
 
 	protected int m_Button;
-	protected int x, y;
 	protected int screenX, screenY;
 	
 	public MouseButtonEvent(int button, int x, int y, int screenX, int screenY, Event.Type type) {
-		super(type);
+		super(x, y, type);
 		this.m_Button = button;
 		this.x = x;
 		this.y = y;

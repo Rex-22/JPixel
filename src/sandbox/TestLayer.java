@@ -1,6 +1,7 @@
 package sandbox;
 
 import engine.components.CameraFollowComponent;
+import engine.components.EntityRenderComponent;
 import engine.components.SimpleMoveComponent;
 import engine.core.Entity;
 import engine.core.Transform;
@@ -27,6 +28,7 @@ public class TestLayer extends GameLayer {
         entity = new TestEntity(new Transform(), sprite);
         entity.AddComponent(new SimpleMoveComponent());
         entity.AddComponent(new CameraFollowComponent(GetCamera()));
+        entity.GetComponent(EntityRenderComponent.class).SetRenderBoundingBox(true);
 
 		Add(entity);
     }

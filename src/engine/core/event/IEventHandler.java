@@ -1,6 +1,6 @@
 package engine.core.event;
 
-public interface EventHandler {
+public interface IEventHandler {
 
 	boolean OnEvent(Event event);
 	

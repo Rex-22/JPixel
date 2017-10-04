@@ -8,7 +8,7 @@ public class EventDispatcher {
 		this.m_Event = event;
 	}
 	
-	public void Dispatch(Event.Type type, EventHandler handler) {
+	public void Dispatch(Event.Type type, IEventHandler handler) {
 		if (m_Event.m_Handled)
 			return;
 		

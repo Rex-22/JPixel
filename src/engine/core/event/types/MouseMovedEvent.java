@@ -3,14 +3,13 @@ package engine.core.event.types;
 
 import engine.core.event.Event;
 
-public class MouseMovedEvent extends Event {
+public class MouseMovedEvent extends MouseEvent {
 
-	private int x, y;
 	private int screenX, screenY;
 	private boolean m_Dragged;
 	
 	public MouseMovedEvent(int x, int y, int screenX, int screenY, boolean dragged) {
-		super(Event.Type.MOUSE_MOVED);
+		super(x, y, Event.Type.MOUSE_MOVED);
 		this.x = x;
 		this.y = y;
 		this.screenX = screenX;

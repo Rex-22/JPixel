@@ -2,11 +2,11 @@ package engine.gfx;
 
 import engine.core.Camera;
 import engine.core.event.Event;
-import engine.core.event.EventListener;
+import engine.core.event.IEventListener;
 
 import java.awt.*;
 
-public abstract class Layer implements Comparable<Layer>, EventListener {
+public abstract class Layer implements Comparable<Layer>, IEventListener {
 
     private int m_RenderOrder;
     private Camera m_Camera;
