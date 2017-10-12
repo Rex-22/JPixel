@@ -9,17 +9,48 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A {@class GameObject} is the most simple form a object in the engine.
+ * Every component in the engine is derived from this class and can not use the engine if it
+ * does not extend this class
+ *
+ * GameObjects have a list of components that control the way it will behave and act,
+ * this inclued things rendering and moving the object
+ *
+ * It should be noted that you should not be modifying a object directly since it could lead to errors with
+ * the use of components and any changes made to the object should occur from one of its components
+ * */
 public class GameObject {
 
+    /** The location of the object */
     protected Transform m_Transform;
-    private Transform m_OldTransform;
+    /** The previous location of the object before it moved */
+    private Transform m_OldTransform; //This is deprecated for now since it causes some issues
 
+    /**A list of components to control the object*/
     protected List<Component> m_Components;
 
+    /**The bounding box for the GameObject,
+     * NOTE: This is temporary and will be moved to a type of
+     * physics engine later on*/
+    //TODO: Extrapolate this to a physics system
+    //Note: The GameObject class is meant to be very bare boned and minimalistic, all functionality
+    //      should be added from a derivative class or added by a component
     private Rectangle m_BoundingBox;
 
-    public GameObject() { m_Components = new ArrayList<>(); }
+    /**Initialise the GameObject with no parameters
+     *
+     * This will create a empty component list and a new transform object at 0, 0*/
+    public GameObject() {
+        this(new Transform());
+    }
 
+
+    /**
+     * This will initialise the component to a set location,
+     *
+     * @param transform The origin of the object
+     */
     public GameObject(Transform transform) {
         this.m_Transform = transform;
         this.m_OldTransform = transform;
@@ -27,6 +58,7 @@ public class GameObject {
 
         m_Components = new ArrayList<>();
     }
+
 
     public void MasterUpdate(float delta) {
 //        if (HasMoved()) {
