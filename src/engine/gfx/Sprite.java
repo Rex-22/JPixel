@@ -73,6 +73,10 @@ public class Sprite {
         m_Sprite.Render(m_Transform.GetX() - camera.GetX(), m_Transform.GetY() - camera.GetY(), g);
     }
 
+    public void OnRender(Graphics g, Camera camera, Transform transform) {
+        m_Sprite.Render(transform.GetX() - camera.GetX(), transform.GetY() - camera.GetY(), g);
+    }
+
     public void SetTransform(Transform transform) {
         this.m_Transform = transform;
         m_Sprite.Scale(transform.GetSize());
