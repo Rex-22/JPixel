@@ -1,12 +1,12 @@
-package sandbox;
+package sandbox.tile;
 
 import engine.core.Tile;
 import engine.core.Transform;
 import engine.gfx.Sprite;
 
-public class TestTile extends Tile {
+public class TileTest extends Tile {
 
-    public TestTile(Transform transform, Sprite texture) {
+    public TileTest(Transform transform, Sprite texture) {
         super(transform, texture);
     }
 

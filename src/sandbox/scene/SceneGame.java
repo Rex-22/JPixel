@@ -1,4 +1,4 @@
-package sandbox;
+package sandbox.scene;
 
 import engine.core.Scene;
 import engine.core.event.Event;
@@ -6,14 +6,15 @@ import engine.core.event.types.KeyEvent;
 import engine.core.event.types.KeyPressedEvent;
 import engine.gfx.GameLayer;
 import engine.gfx.Window;
+import sandbox.layer.LayerTest;
 
 import java.awt.*;
 
-public class Game extends Scene {
+public class SceneGame extends Scene {
 
 	@Override
 	public void OnInit() {
-		GameLayer gameLayer = new TestLayer();
+		GameLayer gameLayer = new LayerTest();
 		Add(gameLayer);
 	}
 
