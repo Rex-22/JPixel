@@ -37,6 +37,8 @@ public class Window {
         m_Window.setVisible(true);
 
         m_Canvas.createBufferStrategy(3);
+
+        m_Canvas.requestFocus();
     }
 
     public void Render(){
