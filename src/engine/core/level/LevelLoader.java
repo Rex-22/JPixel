@@ -1,6 +1,6 @@
 package engine.core.level;
 
-import engine.core.Entity;
+import engine.core.entity.Entity;
 import engine.core.Tile.Tile;
 import engine.core.Transform;
 import sandbox.entity.EntityCoin;
@@ -47,14 +47,25 @@ public class LevelLoader {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(LevelLoader.class.getClassLoader().getResource(fileName).getFile()));
 
             while((line = bufferedReader.readLine()) != null) {
-                if (line.equals("tile")) {
-                    
-                }
-                else if (line.equals("entity")) {
+                if (line.equals("")) continue;
+                String[] tokens = line.split("=");
 
+                //We are reading a tile
+                if(tokens[0].startsWith("t")){
+                    String tileName = tokens[1];
+                    String tileColourID = tokens[0].substring(1);
                 }
-                else if (line.equals("data")){
 
+                //We are reading a entity
+                if(tokens[0].startsWith("e")){
+                    String entityName = tokens[1];
+                    String entityColourID = tokens[0].substring(1);
+                }
+
+                //We are reading a data tag
+                if(tokens[0].startsWith("d")){
+                    String dataName = tokens[1];
+                    String dataColourID = tokens[0].substring(1);
                 }
             }
 
