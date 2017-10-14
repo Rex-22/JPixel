@@ -6,6 +6,12 @@ public class SpriteSheet extends Bitmap {
     private int m_Height;
     private int m_Size;
 
+    /**
+     * Create a sprite sheet that has sprites inside
+     *
+     * @param path The path to the sprite sheet
+     * @param size The size of a sprite in the sheet
+     */
     public SpriteSheet(String path, int size) {
         super(path);
         m_Width = this.GetWidth();

@@ -4,7 +4,8 @@ import engine.core.Scene;
 import engine.core.event.Event;
 import engine.core.event.types.KeyEvent;
 import engine.core.event.types.KeyPressedEvent;
-import engine.gfx.GameLayer;
+import engine.core.level.Level;
+import engine.gfx.PlayerLayer;
 import engine.gfx.Window;
 import sandbox.layer.LayerTest;
 
@@ -14,8 +15,11 @@ public class SceneGame extends Scene {
 
 	@Override
 	public void OnInit() {
-		GameLayer gameLayer = new LayerTest();
-		Add(gameLayer);
+		PlayerLayer playerLayer = new LayerTest();
+        Level level = new Level("level_1");
+
+        Add(level);
+		Add(playerLayer);
 	}
 
 	@Override
