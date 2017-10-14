@@ -3,6 +3,7 @@ package engine.core.Tile;
 import engine.components.TileRenderComponent;
 import engine.core.GameObject;
 import engine.core.Transform;
+import engine.gfx.Bitmap;
 import engine.gfx.Sprite;
 
 import java.util.List;
@@ -53,4 +54,5 @@ public abstract class Tile extends GameObject {
         return m_Name;
     }
 
+    public Sprite GetTexture(){ return m_Texture; }
 }

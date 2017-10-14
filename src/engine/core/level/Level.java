@@ -1,18 +1,16 @@
 package engine.core.level;
 
-import engine.components.Component;
-import engine.core.GameObject;
 import engine.core.Tile.Tile;
+import engine.core.Transform;
 import engine.core.entity.Entity;
 import engine.core.entity.SimpleEntity;
-import engine.gfx.Layer;
 import engine.gfx.SimpleLayer;
+import engine.gfx.Sprite;
 import sandbox.entity.EntityPlayer;
 import sandbox.tile.SimpleTile;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 public class Level extends SimpleLayer {
 
@@ -49,22 +47,33 @@ public class Level extends SimpleLayer {
                 int entity  = (col >> 8) & 0xFF;
                 int data    = col & 0xFF;
 
-                Tile tileToAdd= new SimpleTile(loader.GetTile(tile));
-                Entity entityToAdd = new SimpleEntity(loader.GetEntity(entity));
+                Constructor constructor = null;
+                try {
+                    constructor = Tile.class.getConstructor(Transform.class, String.class, Sprite.class);
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
 
-                tileToAdd.GetTransform().SetPosition(x, y);
-                entityToAdd.GetTransform().SetPosition(x, y, true);
+                try {
+                    Tile tileToAdd = (Tile)constructor.newInstance(loader.GetTile(entity));
+                    Entity entityToAdd = (Entity)constructor.newInstance(loader.GetEntity(entity));
 
-                Add(tileToAdd);
-                Add(entityToAdd);
+                    tileToAdd.GetTransform().SetPosition(x, y);
+                    entityToAdd.GetTransform().SetPosition(x, y);
+
+                    Add(tileToAdd);
+                    Add(entityToAdd);
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+
+
+
 
                 if (loader.GetData(data) == LevelData.SPAWN_POINT){
                     m_Player.GetTransform().SetPosition(x, y, true);
-
-
-//                    x * m_Player.GetTransform().GetSize().x,
-//                            y * m_Player.GetTransform().GetSize().y
                 }
+
             }
         }
     }

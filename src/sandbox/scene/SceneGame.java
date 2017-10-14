@@ -21,7 +21,7 @@ public class SceneGame extends Scene {
         player.AddComponent(new SimpleMoveComponent());
 
         Level level = new Level("level_1", player);
-        
+
         player.AddComponent(new CameraFollowComponent(level.GetCamera()));
 
         Add(level);

@@ -13,7 +13,7 @@ public class Transform {
     }
 
     public Transform(Vector2f position) {
-        this(position, new Vector2f(50, 50));
+        this(position, new Vector2f(16, 16));
     }
 
     public Transform(float x, float y){
