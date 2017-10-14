@@ -1,5 +1,7 @@
 package engine.gfx;
 
+import org.joml.Vector2f;
+
 public class SpriteSheet extends Bitmap {
 
     private int m_Width;
@@ -37,5 +39,12 @@ public class SpriteSheet extends Bitmap {
     public int GetHeight() {
 		return m_Height;
 	}
-    
+
+
+    /**
+     * @return The size a single sprite in the sheet
+     */
+    public Vector2f GetSize() {
+        return new Vector2f(m_Size, m_Size);
+    }
 }

@@ -5,10 +5,10 @@ import engine.core.Transform;
 import engine.gfx.Sprite;
 import sandbox.Textures;
 
-public class StoneTile extends Tile {
+public class StoneTile extends SimpleTile {
 
     public StoneTile() {
-        super(new Transform(), "Stone",Textures.STONE);
+        super(new Transform(),Textures.STONE, "Stone");
     }
 
     @Override

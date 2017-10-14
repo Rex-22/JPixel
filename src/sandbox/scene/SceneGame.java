@@ -1,13 +1,15 @@
 package sandbox.scene;
 
+import engine.components.CameraFollowComponent;
+import engine.components.SimpleMoveComponent;
+import engine.core.Camera;
 import engine.core.Scene;
 import engine.core.event.Event;
 import engine.core.event.types.KeyEvent;
 import engine.core.event.types.KeyPressedEvent;
 import engine.core.level.Level;
-import engine.gfx.PlayerLayer;
 import engine.gfx.Window;
-import sandbox.layer.LayerTest;
+import sandbox.entity.EntityPlayer;
 
 import java.awt.*;
 
@@ -15,11 +17,14 @@ public class SceneGame extends Scene {
 
 	@Override
 	public void OnInit() {
-		PlayerLayer playerLayer = new LayerTest();
-        Level level = new Level("level_1");
+        EntityPlayer player = new EntityPlayer();
+        player.AddComponent(new SimpleMoveComponent());
+
+        Level level = new Level("level_1", player);
+        
+        player.AddComponent(new CameraFollowComponent(level.GetCamera()));
 
         Add(level);
-		Add(playerLayer);
 	}
 
 	@Override

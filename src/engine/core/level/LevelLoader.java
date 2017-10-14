@@ -1,30 +1,31 @@
 package engine.core.level;
 
+import engine.components.EntityRenderComponent;
 import engine.core.entity.Entity;
 import engine.core.Tile.Tile;
 import engine.core.Transform;
+import engine.gfx.Bitmap;
+import org.joml.Vector2f;
 import sandbox.entity.EntityCoin;
 import sandbox.tile.Tiles;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LevelLoader {
 
     private String m_LevelName;
+    private Bitmap m_LevelImg;
+
     private List<Tile> m_TileList;
     private List<Entity> m_EntityList;
 
     private Map<Integer, Tile> m_TileMap;
     private Map<Integer, Entity> m_EntityMap;
-    private Map<Integer, String> m_DataMap;
+    private Map<Integer, LevelData> m_DataMap;
 
-    private Level m_TargetLevel;
 
-    public LevelLoader(Level level, String levelName) {
+    public LevelLoader(String levelName) {
         this.m_LevelName = levelName;
         this.m_EntityList = new ArrayList<>();
         this.m_TileList = new ArrayList<>();
@@ -33,9 +34,14 @@ public class LevelLoader {
         m_EntityMap = new HashMap<>();
         m_DataMap = new HashMap<>();
 
-        m_TargetLevel = level;
-
         LoadFile();
+        m_LevelImg = LoadLevelImage();
+    }
+
+    private Bitmap LoadLevelImage() {
+        Bitmap result = new Bitmap("level/"+m_LevelName+"/"+m_LevelName+"_img.png");
+
+        return result;
     }
 
     private void LoadFile(){
@@ -54,18 +60,33 @@ public class LevelLoader {
                 if(tokens[0].startsWith("t")){
                     String tileName = tokens[1];
                     String tileColourID = tokens[0].substring(1);
+
+                    Tile tile = Tiles.GetByName(tileName);
+
+                    m_TileList.add(tile);
+                    m_TileMap.put(Integer.parseInt(tileColourID), tile);
                 }
 
                 //We are reading a entity
                 if(tokens[0].startsWith("e")){
                     String entityName = tokens[1];
                     String entityColourID = tokens[0].substring(1);
+
+                    if (entityName.equals("coin")){
+                        Entity entity = new EntityCoin(new Transform());
+                        entity.GetComponent(EntityRenderComponent.class).SetEnabled(false);
+
+                        m_EntityList.add(entity);
+                        m_EntityMap.put(Integer.parseInt(entityColourID), entity);
+                    }
                 }
 
                 //We are reading a data tag
                 if(tokens[0].startsWith("d")){
                     String dataName = tokens[1];
                     String dataColourID = tokens[0].substring(1);
+
+                    m_DataMap.put(Integer.parseInt(dataColourID), LevelData.GetByName(dataName));
                 }
             }
 
@@ -135,7 +156,7 @@ public class LevelLoader {
 
     public Entity GetEntity(Entity entity){
         for (Entity e : m_EntityList) {
-//            if (e.GetName().equals(entityName)) return e;
+            if (entity == e) return e;
         }
 
         return null;
@@ -143,19 +164,28 @@ public class LevelLoader {
 
     public Entity GetEntity(String entityName){
         for (Entity e : m_EntityList) {
-//            if (e.GetName().equals(entityName)) return e;
+            if (e.GetName().equals(entityName)) return e;
         }
 
         return null;
     }
 
-    private Tile GetTile(int rColour) {
+    public Tile GetTile(int rColour) {
         if(m_TileMap.get(rColour) != null) return m_TileMap.get(rColour);
         return Tiles.STONE;
     }
 
-    private Entity GetEntity(int gColour) {
+    public Entity GetEntity(int gColour) {
         if(m_EntityMap.get(gColour) != null) return m_EntityMap.get(gColour);
         return new EntityCoin(new Transform(0, 0));
+    }
+
+    public LevelData GetData(int bColour){
+        if (m_DataMap.get(bColour) != null) return m_DataMap.get(bColour);
+        return null;
+    }
+
+    public Bitmap GetLevelImg() {
+        return m_LevelImg;
     }
 }

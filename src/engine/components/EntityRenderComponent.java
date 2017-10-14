@@ -22,6 +22,13 @@ public class EntityRenderComponent extends Component {
 
     @Override
     public void Init() {
+        if (m_ParentEntity.GetTransform().GetSize().equals(new Vector2f())){
+            if (m_Texture.GetSheet() != null)
+                m_Parent.GetTransform().SetSize(m_Texture.GetSheet().GetSize());
+            else
+                m_Parent.GetTransform().SetSize(m_Texture.GetBitmap().GetSize());
+        }
+
         m_Texture.SetTransform(m_Parent.GetTransform());
     }
 

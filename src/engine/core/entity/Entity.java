@@ -25,6 +25,10 @@ public abstract class Entity extends GameObject {
         AddComponent(new EntityRenderComponent(this));
     }
 
+    public Entity(Entity entity) {
+        this(entity.m_Transform, entity.m_Texture, entity.m_Name);
+    }
+
     public Sprite GetSprite() {
         return m_Texture;
     }

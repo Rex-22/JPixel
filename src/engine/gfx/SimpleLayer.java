@@ -8,11 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class PlayerLayer extends Layer {
+public class SimpleLayer extends Layer {
 
     private List<GameObject> m_GameObjects;
 
-    public PlayerLayer() {
+    public SimpleLayer() {
         super(0);
         this.m_GameObjects = new CopyOnWriteArrayList<>();
     }

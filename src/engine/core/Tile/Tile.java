@@ -39,10 +39,13 @@ public abstract class Tile extends GameObject {
             }
         };
 
-
     }
 
-    public boolean IsSolid(){
+    public Tile(Tile tile){
+        this(tile.m_Transform, tile.m_Name, tile.m_Texture);
+    }
+
+   public boolean IsSolid(){
         return false;
     }
 

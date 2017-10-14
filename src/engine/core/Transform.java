@@ -28,6 +28,21 @@ public class Transform {
         this.m_Position = position;
     }
 
+    public void SetPosition(float x, float y){
+        SetPosition(new Vector2f(x, y));
+    }
+
+    public void SetPosition(int x, int y){
+        SetPosition(new Vector2f(x, y));
+    }
+
+    public void SetPosition(int x, int y, boolean snap){
+        if (snap)
+            SetPosition(new Vector2f(x * m_Size.x, y * m_Size.y));
+        else
+            SetPosition(new Vector2f(x, y));
+    }
+
     public float GetX() {
         return m_Position.x;
     }

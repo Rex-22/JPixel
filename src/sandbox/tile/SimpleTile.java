@@ -10,4 +10,11 @@ public class SimpleTile extends Tile {
         super(new Transform(), name, texture);
     }
 
+    public SimpleTile(Transform transform, Sprite texture, String name) {
+        super(transform, name, texture);
+    }
+
+    public SimpleTile(Tile tile) {
+        super(tile);
+    }
 }

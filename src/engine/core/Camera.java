@@ -6,6 +6,10 @@ public class Camera {
 
     private Vector2f m_Position;
 
+    public Camera(){
+        this(new Vector2f());
+    }
+
     public Camera(int x, int y){
         this(new Vector2f(x, y));
     }

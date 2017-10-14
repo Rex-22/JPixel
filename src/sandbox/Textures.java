@@ -5,7 +5,7 @@ import engine.gfx.SpriteSheet;
 
 public class Textures {
 
-    public static SpriteSheet LEVEL_1_SHEET = new SpriteSheet("spritesheet/level_1", 16);
+    public static SpriteSheet LEVEL_1_SHEET = new SpriteSheet("spritesheet/level_1.png", 16);
 
     public static Sprite STONE = new Sprite(LEVEL_1_SHEET, 0, 0);
     public static Sprite GRASS = new Sprite(LEVEL_1_SHEET, 1, 0);

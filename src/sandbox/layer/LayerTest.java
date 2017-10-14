@@ -1,8 +1,8 @@
 package sandbox.layer;
 
-import engine.gfx.PlayerLayer;
+import engine.gfx.SimpleLayer;
 
-public class LayerTest extends PlayerLayer {
+public class LayerTest extends SimpleLayer {
 
 
     @Override

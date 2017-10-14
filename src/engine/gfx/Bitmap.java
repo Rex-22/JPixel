@@ -103,4 +103,8 @@ public class Bitmap {
     protected void SetImage(BufferedImage image) {
         this.m_Image = image;
     }
+
+    public Vector2f GetSize() {
+        return new Vector2f(m_Width, m_Height);
+    }
 }
