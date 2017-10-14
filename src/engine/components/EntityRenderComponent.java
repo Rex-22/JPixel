@@ -1,7 +1,7 @@
 package engine.components;
 
 import engine.core.Camera;
-import engine.core.Entity;
+import engine.core.entity.Entity;
 import engine.core.Transform;
 import engine.gfx.Sprite;
 import org.joml.Vector2f;

@@ -1,6 +1,6 @@
 package sandbox.entity;
 
-import engine.core.Entity;
+import engine.core.entity.Entity;
 import engine.core.Transform;
 import engine.gfx.Sprite;
 
