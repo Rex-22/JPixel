@@ -1,2 +1,2 @@
-# JEngine
-A Java Game Engine made with the AWT API
+# JPixel
+A Java game engine made with the AWT API
