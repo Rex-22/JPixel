@@ -1,6 +1,7 @@
 package ruben.jpixel.engine.graphics;
 
 import ruben.jpixel.engine.entity.Entity;
+import ruben.jpixel.engine.tile.Tile;
 
 public class Screen {
 
@@ -21,9 +22,9 @@ public class Screen {
         this.camera = camera;
     }
 
-    public void draw(IDrawable drawable){
-        int xp = drawable.getPosition().x - camera.getX();
-        int yp = drawable.getPosition().y - camera.getY();
+    public void draw(int xpos, int ypos, IDrawable drawable){
+        int xp = xpos - camera.getX();
+        int yp = ypos - camera.getY();
         for (int y = 0; y < drawable.getHeight(); y++) {
             int ya = y + yp;
             for (int x = 0; x < drawable.getWidth(); x++) {
@@ -38,8 +39,8 @@ public class Screen {
     public void draw(Entity entity){
         IDrawable drawable = entity.getSprite();
 
-        int xp = drawable.getPosition().x - camera.getX();
-        int yp = drawable.getPosition().y - camera.getY();
+        int xp = entity.getPosition().x - camera.getX();
+        int yp = entity.getPosition().y - camera.getY();
         for (int y = 0; y < drawable.getHeight(); y++) {
             int ya = y + yp;
             for (int x = 0; x < drawable.getWidth(); x++) {
@@ -47,6 +48,22 @@ public class Screen {
                 if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
                 int col = drawable.getPixel()[x + y * drawable.getWidth()];
                 if (col != ALPHA_COL) pixels[xa + ya * width] = col;
+            }
+        }
+    }
+
+    public void draw(Tile tile) {
+        IDrawable drawable = tile.getSprite();
+
+        int xp = tile.getPosition().getPosition().x - camera.getX();
+        int yp = tile.getPosition().getPosition().y - camera.getY();
+        for (int y = 0; y < Tile.SIZE; y++) {
+            int ya = y + yp;
+            for (int x = 0; x < Tile.SIZE; x++) {
+                int xa = x + xp;
+                if (xa < -Tile.SIZE || xa >= width || ya < 0 || ya >= height) break;
+                if (xa < 0) xa = 0;
+                pixels[xa + ya * width] = drawable.getPixel()[x + y * Tile.SIZE];
             }
         }
     }

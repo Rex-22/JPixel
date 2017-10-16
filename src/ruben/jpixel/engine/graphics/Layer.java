@@ -1,5 +1,6 @@
 package ruben.jpixel.engine.graphics;
 
+import ruben.jpixel.engine.core.IGameObject;
 import ruben.jpixel.engine.entity.Entity;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public class Layer {
 
-    private List<Entity> entityStack;
+    private List<IGameObject> entityStack;
     protected static Camera camera;
 
     public Layer() {
@@ -16,7 +17,7 @@ public class Layer {
 
     public void updateEntity() {
         for (int i = 0; i < entityStack.size(); i++) {
-            entityStack.get(i).updateComponent();
+            entityStack.get(i).update();
         }
 
         update();
@@ -24,7 +25,7 @@ public class Layer {
 
     public void renderEntity(Screen screen) {
         for (int i = 0; i < entityStack.size(); i++) {
-            entityStack.get(i).renderComponent(screen);
+            entityStack.get(i).render(screen);
         }
 
         render(screen);
@@ -34,8 +35,8 @@ public class Layer {
 
     public void render(Screen screen){}
 
-    public void add(Entity entity){
-        entityStack.add(entity);
+    public void add(IGameObject object){
+        entityStack.add(object);
     }
 
     public static void setCamera(Camera camera) {

@@ -82,4 +82,16 @@ public class Vec2 {
 
         return other;
     }
+
+    public Vec2 mulLocal(int amt) {
+        this.x *= amt;
+        this.y *= amt;
+        return this;
+    }
+
+    public Vec2 divLocal(int amt) {
+        this.x /= amt;
+        this.y /= amt;
+        return this;
+    }
 }
