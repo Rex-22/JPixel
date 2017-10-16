@@ -1,13 +1,11 @@
-package engine.core.Tile;
+package engine.core.tile;
 
 import engine.components.TileRenderComponent;
 import engine.core.GameObject;
 import engine.core.Transform;
-import engine.gfx.Bitmap;
 import engine.gfx.Sprite;
 
 import java.util.List;
-import java.util.Map;
 
 public abstract class Tile extends GameObject {
 
@@ -20,7 +18,7 @@ public abstract class Tile extends GameObject {
         super(transform);
         this.m_Texture = texture;
         this.m_Name = name;
-        AddComponent(new TileRenderComponent(m_Texture));
+        AddComponent(new TileRenderComponent(this));
 
         m_Tags = new NBT<String, String>() {
             List<String> tags;

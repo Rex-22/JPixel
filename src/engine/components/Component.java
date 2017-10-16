@@ -18,27 +18,7 @@ public abstract class Component implements IEventListener, IMouseEvent {
     public void Init(){}
     public void OnUpdate(float delta){}
     public void OnRender(Graphics g, Camera camera){}
-    public void OnEvent(Event event) {
-        if (event instanceof MouseEvent){
-            MouseEvent e = (MouseEvent) event;
-            if(m_Parent.GetBoundingBox().contains(e.GetX(), e.GetY())){
-                switch (event.GetType()){
-                    case MOUSE_MOVED: {
-                        OnMouseMovedEvent((MouseMovedEvent) e);
-                        break;
-                    }
-                    case MOUSE_PRESSED:{
-                        OnMousePressedEvent((MousePressedEvent) e);
-                        break;
-                    }
-                    case MOUSE_RELEASED:{
-                        OnMouseReleasedEvent((MouseReleasedEvent) e);
-                        break;
-                    }
-                }
-            }
-        }
-    }
+    public void OnEvent(Event event) {}
 
     @Override
     public void OnMouseMovedEvent(MouseMovedEvent event) {}

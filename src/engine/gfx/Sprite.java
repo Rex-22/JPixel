@@ -2,6 +2,7 @@ package engine.gfx;
 
 import engine.core.Camera;
 import engine.core.Transform;
+import org.joml.Vector2f;
 
 import java.awt.*;
 
@@ -70,11 +71,16 @@ public class Sprite {
     }
 
     public void OnRender(Graphics g, Camera camera) {
-        m_Sprite.Render(m_Transform.GetX() - camera.GetX(), m_Transform.GetY() - camera.GetY(), g);
+        OnRender(m_Transform, g, camera);
     }
 
-    public void OnRender(Graphics g, Camera camera, Transform transform) {
-        m_Sprite.Render(transform.GetX() - camera.GetX(), transform.GetY() - camera.GetY(), g);
+    public void OnRender(Graphics g, Camera camera, Vector2f scale) {
+        m_Transform.SetSize(scale);
+        OnRender(m_Transform, g, camera);
+    }
+
+    public void OnRender(Transform transform, Graphics g, Camera camera) {
+       m_Sprite.Render(transform, g, camera);
     }
 
     public void SetTransform(Transform transform) {

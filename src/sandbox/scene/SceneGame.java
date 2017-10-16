@@ -1,6 +1,7 @@
 package sandbox.scene;
 
 import engine.components.CameraFollowComponent;
+import engine.components.EntityRenderComponent;
 import engine.components.SimpleMoveComponent;
 import engine.core.Camera;
 import engine.core.Scene;
@@ -9,6 +10,7 @@ import engine.core.event.types.KeyEvent;
 import engine.core.event.types.KeyPressedEvent;
 import engine.core.level.Level;
 import engine.gfx.Window;
+import org.joml.Vector2f;
 import sandbox.entity.EntityPlayer;
 
 import java.awt.*;

@@ -29,14 +29,6 @@ public class GameObject {
     /**A list of components to control the object*/
     protected List<Component> m_Components;
 
-    /**The bounding box for the GameObject,
-     * NOTE: This is temporary and will be moved to a type of
-     * physics engine later on*/
-    //TODO: Extrapolate this to a physics system
-    //Note: The GameObject class is meant to be very bare boned and minimalistic, all functionality
-    //      should be added from a derivative class or added by a component
-    private Rectangle m_BoundingBox;
-
     /**Initialise the GameObject with no parameters
      *
      * This will create a empty component list and a new transform object at 0, 0*/
@@ -53,19 +45,12 @@ public class GameObject {
     public GameObject(Transform transform) {
         this.m_Transform = transform;
         this.m_OldTransform = transform;
-        this.m_BoundingBox = new Rectangle((int)transform.GetX(), (int)transform.GetY(), (int)transform.GetSize().x, (int)transform.GetSize().y);
 
         m_Components = new ArrayList<>();
     }
 
 
     public void MasterUpdate(float delta) {
-//        if (HasMoved()) {
-//            m_OldTransform = m_Transform;
-
-            m_BoundingBox.setBounds((int)m_Transform.GetX(), (int)m_Transform.GetY(), (int)m_Transform.GetSize().x, (int)m_Transform.GetSize().y);
-//        }
-
         for (Component comp : m_Components)
             if (comp.IsEnabled())
                 comp.OnUpdate(delta);
@@ -133,10 +118,6 @@ public class GameObject {
 
     public void SetPosition(Vector2f position) {
         m_Transform.SetPosition(position);
-    }
-
-    public Rectangle GetBoundingBox() {
-        return m_BoundingBox;
     }
 
 }

@@ -1,5 +1,7 @@
 package engine.gfx;
 
+import engine.core.Camera;
+import engine.core.Transform;
 import org.joml.Vector2f;
 
 import javax.imageio.ImageIO;
@@ -66,9 +68,10 @@ public class Bitmap {
         Scale((int)amount.x, (int)amount.y);
     }
 
-    public void Render(float x, float y, Graphics g3d) {
+    public void Render(Transform transform, Graphics g3d, Camera camera) {
         Graphics2D g = (Graphics2D) g3d;
-        g.drawImage(m_Image, AffineTransform.getTranslateInstance(x, y), null);
+        Scale(transform.GetSize());
+        g.drawImage(m_Image, AffineTransform.getTranslateInstance(transform.GetX() - camera.GetX(), transform.GetY() - camera.GetY()), null);
     }
 
     private BufferedImage LoadImage(String filepath) {

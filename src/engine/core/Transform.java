@@ -36,13 +36,6 @@ public class Transform {
         SetPosition(new Vector2f(x, y));
     }
 
-    public void SetPosition(int x, int y, boolean snap){
-        if (snap)
-            SetPosition(new Vector2f(x * m_Size.x, y * m_Size.y));
-        else
-            SetPosition(new Vector2f(x, y));
-    }
-
     public float GetX() {
         return m_Position.x;
     }
@@ -61,5 +54,21 @@ public class Transform {
 
     public void SetSize(Vector2f size) {
         this.m_Size = size;
+    }
+
+    public Transform AddPosition(float x, float y) {
+        Transform transform = new Transform(m_Position, m_Size);
+
+        transform.m_Position.set(x + m_Position.x, y + m_Position.y);
+
+        return transform;
+    }
+
+    public Transform SubPosition(float x, float y) {
+        Transform transform = new Transform(m_Position, m_Size);
+
+        transform.m_Position.set(x - m_Position.x, y - m_Position.y);
+
+        return transform;
     }
 }

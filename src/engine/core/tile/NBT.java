@@ -1,4 +1,4 @@
-package engine.core.Tile;
+package engine.core.tile;
 
 public interface NBT<K, T> {
 

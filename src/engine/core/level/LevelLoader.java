@@ -2,11 +2,12 @@ package engine.core.level;
 
 import engine.components.EntityRenderComponent;
 import engine.core.entity.Entity;
-import engine.core.Tile.Tile;
+import engine.core.tile.Tile;
 import engine.core.Transform;
+import engine.core.entity.SimpleEntity;
 import engine.gfx.Bitmap;
-import org.joml.Vector2f;
 import sandbox.entity.EntityCoin;
+import sandbox.tile.SimpleTile;
 import sandbox.tile.Tiles;
 
 import java.io.*;
@@ -171,12 +172,12 @@ public class LevelLoader {
     }
 
     public Tile GetTile(int rColour) {
-        if(m_TileMap.get(rColour) != null) return m_TileMap.get(rColour);
+        if(m_TileMap.get(rColour) != null) return new SimpleTile(m_TileMap.get(rColour));
         return Tiles.STONE;
     }
 
     public Entity GetEntity(int gColour) {
-        if(m_EntityMap.get(gColour) != null) return m_EntityMap.get(gColour);
+        if(m_EntityMap.get(gColour) != null) return new SimpleEntity(m_EntityMap.get(gColour));
         return new EntityCoin(new Transform(0, 0));
     }
 
