@@ -1,6 +1,0 @@
-t00=stone
-t01=grass
-t02=grass_flower
-t03=dirt
-e01=coin
-d01=spawn_point
