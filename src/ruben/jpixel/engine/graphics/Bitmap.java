@@ -18,8 +18,6 @@ public class Bitmap implements IDrawable {
 
     public Bitmap(){}
 
-
-
     public Bitmap(int width, int height) {
         this.width = width;
         this.height = height;

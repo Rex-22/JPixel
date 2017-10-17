@@ -17,15 +17,18 @@ public class Sprite extends Bitmap {
 //    public static Sprite grass_bottom_right = new Sprite(32, 2, 2, SpriteSheet.tiles);
 
     public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
-    public static Sprite stone = new Sprite(16, 1, 0, SpriteSheet.tiles);
-    public static Sprite wood = new Sprite(16, 2, 0, SpriteSheet.tiles);
+    public static Sprite stone_1 = new Sprite(16, 0, 1, SpriteSheet.tiles);
+    public static Sprite stone_2 = new Sprite(16, 0, 2, SpriteSheet.tiles);
+    public static Sprite wood = new Sprite(16, 1, 1, SpriteSheet.tiles);
     public static Bitmap coin = new Bitmap("sprites/coin.png");
 
     private int SIZE;
 
-    private SpriteSheet sheet;
+    protected SpriteSheet sheet;
 
     private Vec2 position;
+
+    private int x, y;
 
     public Sprite(int colour, int width, int height){
         pixels = new int[width * height];
@@ -54,7 +57,9 @@ public class Sprite extends Bitmap {
         this.width = size;
         this.height = size;
         this.pixels = new int[SIZE * SIZE];
-        position = new Vec2(x * size, y * size);
+        this.x = x * size;
+        this.y = y * size;
+        position = new Vec2();
         this.sheet = sheet;
         load();
     }
@@ -85,7 +90,7 @@ public class Sprite extends Bitmap {
     private void load() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                pixels[x + y * width] = sheet.pixels[(x + position.x) + (y + position.y) * sheet.SPRITE_WIDTH];
+                pixels[x + y * width] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.SPRITE_WIDTH];
             }
         }
     }
