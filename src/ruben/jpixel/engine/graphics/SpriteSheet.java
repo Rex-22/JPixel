@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class SpriteSheet {
 
-    public static SpriteSheet tiles = new SpriteSheet("spritesheets/tilesheet.png", 512);
+    public static SpriteSheet tiles = new SpriteSheet("spritesheets/tilesheet.png", 128);
 
     private String path;
     public final int SIZE;

@@ -7,7 +7,7 @@ import ruben.jpixel.engine.math.Vec2;
 
 import java.awt.event.KeyEvent;
 
-public class MoveComponent extends Component{
+public class MoveComponent extends Component {
 
     private int speed;
     private int sprint_speed;

@@ -4,23 +4,34 @@ import ruben.jpixel.engine.math.Vec2;
 
 public class Sprite extends Bitmap {
 
-    public static Sprite grass_top_left = new Sprite(32, 0, 0, SpriteSheet.tiles);
-    public static Sprite grass_top_center = new Sprite(32, 1, 0, SpriteSheet.tiles);
-    public static Sprite grass_top_right = new Sprite(32, 2, 0, SpriteSheet.tiles);
+//    public static Sprite grass_top_left = new Sprite(32, 0, 0, SpriteSheet.tiles);
+//    public static Sprite grass_top_center = new Sprite(32, 1, 0, SpriteSheet.tiles);
+//    public static Sprite grass_top_right = new Sprite(32, 2, 0, SpriteSheet.tiles);
+//
+//    public static Sprite grass_middle_left = new Sprite(32, 0, 1, SpriteSheet.tiles);
+//    public static Sprite grass_middle_center = new Sprite(32, 1, 1, SpriteSheet.tiles);
+//    public static Sprite grass_middle_right = new Sprite(32, 2, 1, SpriteSheet.tiles);
+//
+//    public static Sprite grass_bottom_left = new Sprite(32, 0, 2, SpriteSheet.tiles);
+//    public static Sprite grass_bottom_center = new Sprite(32, 1, 2, SpriteSheet.tiles);
+//    public static Sprite grass_bottom_right = new Sprite(32, 2, 2, SpriteSheet.tiles);
 
-    public static Sprite grass_middle_left = new Sprite(32, 0, 1, SpriteSheet.tiles);
-    public static Sprite grass_middle_center = new Sprite(32, 1, 1, SpriteSheet.tiles);
-    public static Sprite grass_middle_right = new Sprite(32, 2, 1, SpriteSheet.tiles);
-
-    public static Sprite grass_bottom_left = new Sprite(32, 0, 2, SpriteSheet.tiles);
-    public static Sprite grass_bottom_center = new Sprite(32, 1, 2, SpriteSheet.tiles);
-    public static Sprite grass_bottom_right = new Sprite(32, 2, 2, SpriteSheet.tiles);
+    public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
+    public static Sprite stone = new Sprite(16, 1, 0, SpriteSheet.tiles);
+    public static Sprite wood = new Sprite(16, 2, 0, SpriteSheet.tiles);
 
     private int SIZE;
 
     private SpriteSheet sheet;
 
     private Vec2 position;
+
+    public Sprite(int colour, int width, int height){
+        pixels = new int[width * height];
+        for (int i = 0; i < pixels.length; i++) {
+            pixels[i] = colour;
+        }
+    }
 
     public Sprite(int[] pixels, int width, int height) {
         this.pixels = pixels;

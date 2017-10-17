@@ -4,15 +4,17 @@ import ruben.jpixel.engine.component.Component;
 import ruben.jpixel.engine.core.IGameObject;
 import ruben.jpixel.engine.graphics.Bitmap;
 import ruben.jpixel.engine.graphics.Screen;
+import ruben.jpixel.engine.level.Level;
 import ruben.jpixel.engine.math.Vec2;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entity implements IGameObject{
+public class Entity implements IGameObject {
 
     private Vec2 position;
     private Bitmap sprite;
+    private Level level;
 
     private List<Component> componentStack;
 
@@ -23,7 +25,7 @@ public class Entity implements IGameObject{
         componentStack = new ArrayList<>();
     }
 
-    public Entity(Vec2 position){
+    public Entity(Vec2 position) {
         this(position, new Bitmap(16, 16));
     }
 
@@ -71,5 +73,13 @@ public class Entity implements IGameObject{
 
     public Bitmap getSprite() {
         return sprite;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public Level getLevel() {
+        return level;
     }
 }

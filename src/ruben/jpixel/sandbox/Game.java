@@ -12,9 +12,7 @@ public class Game extends BasicGame {
     @Override
     public void init() {
         LayerGame game = new LayerGame();
-        LayerLevel level = new LayerLevel();
 
-        add(level);
         add(game);
     }
 
