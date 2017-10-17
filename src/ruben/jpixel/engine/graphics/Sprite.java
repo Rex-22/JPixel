@@ -19,6 +19,7 @@ public class Sprite extends Bitmap {
     public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
     public static Sprite stone = new Sprite(16, 1, 0, SpriteSheet.tiles);
     public static Sprite wood = new Sprite(16, 2, 0, SpriteSheet.tiles);
+    public static Bitmap coin = new Bitmap("sprites/coin.png");
 
     private int SIZE;
 

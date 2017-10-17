@@ -1,7 +1,11 @@
 package ruben.jpixel.engine.graphics;
 
+import org.joml.Rectanglef;
 import ruben.jpixel.engine.entity.Entity;
+import ruben.jpixel.engine.math.Vec2;
 import ruben.jpixel.engine.tile.Tile;
+
+import java.awt.*;
 
 public class Screen {
 
@@ -55,8 +59,8 @@ public class Screen {
     public void draw(Tile tile) {
         IDrawable drawable = tile.getSprite();
 
-        int xp = tile.getPosition().getPosition().x - camera.getX();
-        int yp = tile.getPosition().getPosition().y - camera.getY();
+        int xp = tile.getPosition().x - camera.getX();
+        int yp = tile.getPosition().y - camera.getY();
         for (int y = 0; y < Tile.SIZE; y++) {
             int ya = y + yp;
             for (int x = 0; x < Tile.SIZE; x++) {
@@ -84,5 +88,25 @@ public class Screen {
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = colour;
         }
+    }
+
+    public void drawRect(Rectangle rectangle) {
+        for (int x = rectangle.x; x < rectangle.width; x++) {
+            for (int y = rectangle.y; y < rectangle.height; y++) {
+                pixels[x + y * width] = 0xff00ff;
+            }
+        }
+    }
+
+    public void drawRect(int minxa, int minya, int maxxa, int maxya) {
+        for (int x = minxa; x < maxxa; x++) {
+            for (int y = minya; y < maxya; y++) {
+                pixels[(x - camera.getX()) + (y - camera.getY()) * width] = 0xff00ff;
+            }
+        }
+    }
+
+    public void drawRect(Rectanglef rect) {
+        drawRect((int)rect.minX, (int)rect.minY, (int)rect.maxX, (int)rect.maxY);
     }
 }

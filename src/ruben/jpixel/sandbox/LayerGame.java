@@ -15,14 +15,14 @@ public class LayerGame extends Layer {
 
     public LayerGame() {
         Bitmap player_sprite = new Bitmap("sprites/player.png");
-        player = new Entity(new Vec2(), player_sprite);
-
-        player.add(new MoveComponent(3));
-        player.add(new CameraFollowComponent(camera));
-
         Level level = new Level("level");
-        level.add(player);
 
+        player = new Entity(new Vec2(), player_sprite, "player");
+        player.add(new MoveComponent(2));
+        player.add(new CameraFollowComponent(camera));
+        player.getPosition().set(level.getSpawnLocation());
+
+        level.add(player);
         add(level);
     }
 
