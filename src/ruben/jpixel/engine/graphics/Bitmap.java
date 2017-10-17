@@ -1,12 +1,13 @@
 package ruben.jpixel.engine.graphics;
 
 import ruben.jpixel.engine.math.Vec2;
+import ruben.jpixel.engine.util.ImageLoader;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Bitmap implements IDrawable, IImageLoader {
+public class Bitmap implements IDrawable {
 
     protected int width;
     protected int height;
@@ -33,7 +34,11 @@ public class Bitmap implements IDrawable, IImageLoader {
     }
 
     public Bitmap(String imagePath){
-        pixels = LoadImage(imagePath);
+        ImageLoader loader = new ImageLoader();
+        pixels = loader.LoadImage(imagePath);
+
+        this.width = loader.getWidth();
+        this.height = loader.getHeight();
 
         position = new Vec2();
     }
@@ -113,24 +118,6 @@ public class Bitmap implements IDrawable, IImageLoader {
     @Override
     public void setPixel(int location, int colour) {
         pixels[location] = colour;
-    }
-
-    @Override
-    public int[] LoadImage(String path) {
-        int[] pixels = null;
-        try{
-            BufferedImage image = ImageIO.read(new File(Bitmap.class.getClassLoader().getResource("assets/"+path).getFile()));
-
-            width = image.getWidth();
-            height = image.getHeight();
-
-            pixels = new int[width * height];
-            image.getRGB(0, 0, width, height, pixels, 0, width);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return pixels;
     }
 
     public void setPosition(Vec2 position) {
