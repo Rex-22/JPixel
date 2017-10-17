@@ -94,4 +94,13 @@ public class Vec2 {
         this.y /= amt;
         return this;
     }
+
+    public Vec2 div(int amt) {
+        Vec2 other = new Vec2(x, y);
+
+        other.x /= amt;
+        other.y /= amt;
+
+        return other;
+    }
 }
