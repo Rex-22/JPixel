@@ -8,7 +8,10 @@ import ruben.jpixel.engine.graphics.Screen;
 import ruben.jpixel.engine.graphics.Sprite;
 import ruben.jpixel.engine.math.Vec2;
 import ruben.jpixel.engine.tile.Tile;
+import ruben.jpixel.engine.tile.TileLava;
 import ruben.jpixel.engine.tile.TilePosition;
+import ruben.jpixel.engine.tile.TileWater;
+import ruben.jpixel.sandbox.EntityPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +27,16 @@ public class Level implements IGameObject {
     private List<IGameObject> level_objects;
     public Vec2 spawnLocation;
 
-    public Level(String name){
+    public Level(String name) {
         this.name = name;
         this.level_objects = new ArrayList<>();
         this.spawnLocation = new Vec2();
         loadLevel();
     }
 
-    private void loadLevel(){
-        level_tile = new Bitmap("levels/"+name+"_tile.png");
-        level_data = new Bitmap("levels/"+name+"_data.png");
+    private void loadLevel() {
+        level_tile = new Bitmap("levels/" + name + "_tile.png");
+        level_data = new Bitmap("levels/" + name + "_data.png");
 
         tiles = new Tile[level_tile.getWidth() * level_tile.getHeight()];
 
@@ -57,15 +60,28 @@ public class Level implements IGameObject {
         }
     }
 
-    public Entity getEntity() {
-       return null;
+    public Entity getEntity(int xp, int yp) {
+        for (int i = 0; i < level_objects.size(); i++) {
+            if (!(level_objects.get(i) instanceof EntityPlayer)) {
+                TilePosition pos = new TilePosition(level_objects.get(i).getPosition());
+                if (pos.getPosition() == new Vec2(xp, yp)) {
+                    System.out.println("Got one");
+                    return (Entity) level_objects.get(i);
+                }
+            }
+        }
+
+        return null;
     }
 
-    private Tile getTile(int colour, Vec2 position){
+    private Tile getTile(int colour, Vec2 position) {
         if (colour == 0xFF00FF00) return new Tile(new TilePosition(position), Sprite.grass, "grass");
         if (colour == 0xFF808080) return new Tile(new TilePosition(position), Sprite.stone_1, "stone_1").setSolid(true);
         if (colour == 0xFF303030) return new Tile(new TilePosition(position), Sprite.stone_2, "stone_2").setSolid(true);
         if (colour == 0xFF724715) return new Tile(new TilePosition(position), Sprite.wood, "wood");
+
+        if (colour == 0xFF0000FF) return new TileWater(new TilePosition(position));
+        if (colour == 0xFFFF0000) return new TileLava(new TilePosition(position));
 
         return new Tile(new TilePosition(position), new Sprite(0xff00ff, Tile.SIZE, Tile.SIZE), "void");
     }
@@ -84,7 +100,7 @@ public class Level implements IGameObject {
     @Override
     public void render(Screen screen) {
         for (int i = 0; i < tiles.length; i++) {
-            screen.draw(tiles[i]);
+            tiles[i].render(screen);
         }
 
         for (int i = 0; i < level_objects.size(); i++) {
@@ -93,7 +109,8 @@ public class Level implements IGameObject {
     }
 
     @Override
-    public void setLevel(Level level) {}
+    public void setLevel(Level level) {
+    }
 
     @Override
     public Vec2 getPosition() {
@@ -105,7 +122,7 @@ public class Level implements IGameObject {
         return null;
     }
 
-    public void add(IGameObject object){
+    public void add(IGameObject object) {
         if (!(object instanceof Level)) {
             this.level_objects.add(object);
             object.setLevel(this);
@@ -116,14 +133,14 @@ public class Level implements IGameObject {
         return spawnLocation;
     }
 
-    public boolean tileCollision(int x, int y, int size, int xOffset, int yOffset){
+    public boolean tileCollision(int x, int y, int size, int xOffset, int yOffset) {
         boolean solid = false;
         for (int c = 0; c < 4; c++) {
             int xt = (x - c % 2 * size + xOffset) / Tile.SIZE;
             int yt = (y - c / 2 * size + yOffset) / Tile.SIZE;
             Tile tile = getTile(xt, yt);
             if (tile != null)
-            if (getTile(xt, yt).isSolid()) solid = true;
+                if (getTile(xt, yt).isSolid()) solid = true;
         }
         return solid;
     }

@@ -2,7 +2,6 @@ package ruben.jpixel.engine.entity;
 
 import ruben.jpixel.engine.component.Component;
 import ruben.jpixel.engine.core.IGameObject;
-import ruben.jpixel.engine.graphics.Bitmap;
 import ruben.jpixel.engine.graphics.Screen;
 import ruben.jpixel.engine.level.Level;
 import ruben.jpixel.engine.math.Vec2;
@@ -22,13 +21,13 @@ public class Entity implements IGameObject {
 
     private boolean enabled = true;
 
-    public Entity(Vec2 position, String name){
+    public Entity(Vec2 position, String name) {
         this.position = position;
         this.name = name;
         componentStack = new ArrayList<>();
     }
 
-    public Entity(String name){
+    public Entity(String name) {
         this(new Vec2(0, 0), name);
     }
 
@@ -42,11 +41,12 @@ public class Entity implements IGameObject {
 
     @Override
     public void update() {
-        for (int i = 0; i < componentStack.size(); i++) {
-            componentStack.get(i).update();
+        if (this.isEnabled()) {
+            for (int i = 0; i < componentStack.size(); i++) {
+                componentStack.get(i).update();
+            }
+            updateEntity();
         }
-
-        updateEntity();
     }
 
     @Override
@@ -55,14 +55,14 @@ public class Entity implements IGameObject {
             componentStack.get(i).render(screen);
         }
 
-        if (isEnabled()) {
-            screen.draw(this);
-        }
+//        if (isEnabled()) {
+//            screen.draw(this);
+//        }
 
         renderEntity(screen);
     }
 
-    public void add(Component component){
+    public void add(Component component) {
         componentStack.add(component);
         component.setParent(this);
     }

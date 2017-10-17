@@ -1,26 +1,15 @@
 package ruben.jpixel.engine.graphics;
 
 import ruben.jpixel.engine.math.Vec2;
+import ruben.jpixel.engine.util.ImageLoader;
 
 public class Sprite extends Bitmap {
-
-//    public static Sprite grass_top_left = new Sprite(32, 0, 0, SpriteSheet.tiles);
-//    public static Sprite grass_top_center = new Sprite(32, 1, 0, SpriteSheet.tiles);
-//    public static Sprite grass_top_right = new Sprite(32, 2, 0, SpriteSheet.tiles);
-//
-//    public static Sprite grass_middle_left = new Sprite(32, 0, 1, SpriteSheet.tiles);
-//    public static Sprite grass_middle_center = new Sprite(32, 1, 1, SpriteSheet.tiles);
-//    public static Sprite grass_middle_right = new Sprite(32, 2, 1, SpriteSheet.tiles);
-//
-//    public static Sprite grass_bottom_left = new Sprite(32, 0, 2, SpriteSheet.tiles);
-//    public static Sprite grass_bottom_center = new Sprite(32, 1, 2, SpriteSheet.tiles);
-//    public static Sprite grass_bottom_right = new Sprite(32, 2, 2, SpriteSheet.tiles);
 
     public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
     public static Sprite stone_1 = new Sprite(16, 0, 1, SpriteSheet.tiles);
     public static Sprite stone_2 = new Sprite(16, 0, 2, SpriteSheet.tiles);
     public static Sprite wood = new Sprite(16, 1, 1, SpriteSheet.tiles);
-    public static Bitmap coin = new Bitmap("sprites/coin.png");
+    public static Sprite coin = new Sprite("sprites/coin.png");
 
     private int SIZE;
 
@@ -35,6 +24,16 @@ public class Sprite extends Bitmap {
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = colour;
         }
+    }
+
+    public Sprite(String imagePath){
+        ImageLoader loader = new ImageLoader();
+        pixels = loader.LoadImage(imagePath);
+
+        this.width = loader.getWidth();
+        this.height = loader.getHeight();
+
+        position = new Vec2();
     }
 
     public Sprite(int[] pixels, int width, int height) {

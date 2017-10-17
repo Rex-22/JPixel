@@ -1,10 +1,10 @@
 package ruben.jpixel.engine.component;
 
+import ruben.jpixel.engine.entity.Entity;
 import ruben.jpixel.engine.input.Input;
-import ruben.jpixel.engine.math.MathUtils;
 import ruben.jpixel.engine.math.Vec2;
 import ruben.jpixel.engine.tile.Tile;
-import ruben.jpixel.engine.tile.TilePosition;
+import ruben.jpixel.engine.tile.TileLava;
 import ruben.jpixel.sandbox.EntityPlayer;
 
 import java.awt.event.KeyEvent;
@@ -55,18 +55,18 @@ public class PlayerMoveComponent extends Component {
             player.setSprite(player.right);
         }
 
-
         if (xa != 0 || ya != 0) {
             move(xa, ya);
             walking = true;
         } else {
             walking = false;
         }
+
+        collision(0, 0);
     }
 
     private void move(int xa, int ya) {
-
-        if (xa != 0 && ya != 0){
+        if (xa != 0 && ya != 0) {
             move(xa, 0);
             move(0, ya);
             return;
@@ -75,6 +75,7 @@ public class PlayerMoveComponent extends Component {
         if (!collision(xa, ya)) {
             parent.getPosition().addLocal(new Vec2(xa, ya));
         }
+
     }
 
     private boolean collision(int xa, int ya) {
@@ -86,10 +87,29 @@ public class PlayerMoveComponent extends Component {
         for (int c = 0; c < 4; c++) {
             int xt = ((x + xa) + c % 2 * 6 + 12) / Tile.SIZE;
             int yt = ((y + ya) + c / 2 * 16 + 14) / Tile.SIZE;
+            onCollideWith(parent.getLevel().getTile(xt, yt));
+            onCollideWith(parent.getLevel().getEntity(xt, yt));
             if (parent.getLevel().getTile(xt, yt).isSolid()) solid = true;
         }
 
         return solid;
+    }
+
+    private void onCollideWith(Tile tile) {
+        if (tile instanceof TileLava) {
+            player.takeDamage();
+        } else {
+            player.negateDamage();
+        }
+    }
+
+    private void onCollideWith(Entity entity) {
+        if (entity!= null) {
+            if (entity.getName().equals("coin")) {
+//                entity.setEnabled(false);
+                System.out.println("got it!");
+            }
+        }
     }
 
 }

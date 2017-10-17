@@ -13,7 +13,7 @@ public class Tile implements IGameObject {
     public static final int SIZE = 16;
 
     private TilePosition position;
-    private Sprite sprite;
+    protected Sprite sprite;
     private Level level;
     private boolean solid = false;
     private String name;

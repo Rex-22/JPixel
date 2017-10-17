@@ -8,12 +8,17 @@ import java.io.IOException;
 public class SpriteSheet {
 
     public static SpriteSheet tiles = new SpriteSheet("spritesheets/spawn_lvl.png", 48);
+    public static SpriteSheet water = new SpriteSheet("spritesheets/water_sheet.png", 64);
+    public static SpriteSheet lava = new SpriteSheet("spritesheets/lava_sheet.png", 64);
+    public static SpriteSheet water_anim = new SpriteSheet(water, 0, 0, 1, 4, 16);
+    public static SpriteSheet lava_anim = new SpriteSheet(lava, 0, 0, 1, 4, 16);
 
     public static SpriteSheet player = new SpriteSheet("spritesheets/player_sheet.png", 128, 96);
     public static SpriteSheet player_down = new SpriteSheet(player, 0, 0, 1, 3, 32);
     public static SpriteSheet player_up = new SpriteSheet(player, 1, 0, 1, 3, 32);
     public static SpriteSheet player_left = new SpriteSheet(player, 2, 0, 1, 3, 32);
     public static SpriteSheet player_right = new SpriteSheet(player, 3, 0, 1, 3, 32);
+
 
     private String path;
     public final int SIZE;
