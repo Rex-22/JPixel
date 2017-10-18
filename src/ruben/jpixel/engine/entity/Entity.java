@@ -1,34 +1,46 @@
 package ruben.jpixel.engine.entity;
 
+import org.dyn4j.collision.manifold.Manifold;
+import org.dyn4j.collision.narrowphase.Penetration;
+import org.dyn4j.dynamics.Body;
+import org.dyn4j.dynamics.BodyFixture;
+import org.dyn4j.dynamics.CollisionListener;
+import org.dyn4j.dynamics.contact.ContactConstraint;
+import org.dyn4j.geometry.Rectangle;
 import ruben.jpixel.engine.component.Component;
 import ruben.jpixel.engine.core.IGameObject;
 import ruben.jpixel.engine.graphics.Screen;
+import ruben.jpixel.engine.graphics.Sprite;
 import ruben.jpixel.engine.level.Level;
 import ruben.jpixel.engine.math.Vec2;
 import ruben.jpixel.engine.tile.Tile;
 import ruben.jpixel.engine.tile.TilePosition;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entity implements IGameObject {
+public class Entity extends Body implements IGameObject, CollisionListener {
 
     private Vec2 position;
     private Level level;
+    protected Sprite sprite;
 
     private List<Component> componentStack;
     private String name;
 
     private boolean enabled = true;
 
-    public Entity(Vec2 position, String name) {
+    public Entity(Vec2 position, String name, Sprite sprite) {
+        addFixture(new BodyFixture(new Rectangle(sprite.getWidth(), sprite.getHeight())));
         this.position = position;
         this.name = name;
         componentStack = new ArrayList<>();
+        this.sprite = sprite;
     }
 
-    public Entity(String name) {
-        this(new Vec2(0, 0), name);
+    public Entity(String name, Sprite sprite) {
+        this(new Vec2(0, 0), name, sprite);
     }
 
     public void updateEntity() {
@@ -36,14 +48,17 @@ public class Entity implements IGameObject {
     }
 
     public void renderEntity(Screen screen) {
-
+        screen.draw(this);
     }
 
+    public void renderEntity(Graphics g) {}
+
     @Override
-    public void update() {
+    public void update(float delta) {
         if (this.isEnabled()) {
+            this.translate(position.x, position.y);
             for (int i = 0; i < componentStack.size(); i++) {
-                componentStack.get(i).update();
+                componentStack.get(i).update(delta);
             }
             updateEntity();
         }
@@ -55,11 +70,19 @@ public class Entity implements IGameObject {
             componentStack.get(i).render(screen);
         }
 
-//        if (isEnabled()) {
-//            screen.draw(this);
-//        }
+        if (isEnabled()) {
+            screen.draw(this);
+        }
 
         renderEntity(screen);
+    }
+
+    public void render(Graphics g){
+        for (int i = 0; i < componentStack.size(); i++) {
+            componentStack.get(i).render(g);
+        }
+
+        renderEntity(g);
     }
 
     public void add(Component component) {
@@ -94,5 +117,29 @@ public class Entity implements IGameObject {
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
+    public boolean collision(Body body1, BodyFixture fixture1, Body body2, BodyFixture fixture2) {
+        return true;
+    }
+
+    @Override
+    public boolean collision(Body body1, BodyFixture fixture1, Body body2, BodyFixture fixture2, Penetration penetration) {
+        return true;
+    }
+
+    @Override
+    public boolean collision(Body body1, BodyFixture fixture1, Body body2, BodyFixture fixture2, Manifold manifold) {
+        return true;
+    }
+
+    @Override
+    public boolean collision(ContactConstraint contactConstraint) {
+        return true;
     }
 }

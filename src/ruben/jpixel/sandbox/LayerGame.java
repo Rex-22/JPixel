@@ -7,9 +7,9 @@ public class LayerGame extends Layer {
 
     public LayerGame() {
 
-        Level level = new Level("level");
-
         EntityPlayer player = new EntityPlayer("player");
+        Level level = new Level("level", player);
+
         player.getPosition().set(level.getSpawnLocation());
 
         level.add(player);

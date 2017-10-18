@@ -27,7 +27,7 @@ public class PlayerMoveComponent extends Component {
     }
 
     @Override
-    public void update() {
+    public void update(float delta) {
         int xa = 0, ya = 0;
 
         UP = Input.isKeyDown(KeyEvent.VK_W) || Input.isKeyDown(KeyEvent.VK_UP);
@@ -35,7 +35,7 @@ public class PlayerMoveComponent extends Component {
         LEFT = Input.isKeyDown(KeyEvent.VK_A) || Input.isKeyDown(KeyEvent.VK_LEFT);
         RIGHT = Input.isKeyDown(KeyEvent.VK_D) || Input.isKeyDown(KeyEvent.VK_RIGHT);
 
-        if (walking) player.animSprite.update();
+        if (walking) player.animSprite.update(delta);
         else player.animSprite.setFrame(0);
 
         if (UP) {
@@ -88,7 +88,7 @@ public class PlayerMoveComponent extends Component {
             int xt = ((x + xa) + c % 2 * 6 + 12) / Tile.SIZE;
             int yt = ((y + ya) + c / 2 * 16 + 14) / Tile.SIZE;
             onCollideWith(parent.getLevel().getTile(xt, yt));
-            onCollideWith(parent.getLevel().getEntity(xt, yt));
+            onCollideWith(parent.getLevel().getDataTile(xt, yt));
             if (parent.getLevel().getTile(xt, yt).isSolid()) solid = true;
         }
 
@@ -96,6 +96,13 @@ public class PlayerMoveComponent extends Component {
     }
 
     private void onCollideWith(Tile tile) {
+        if (tile == null) return;
+
+        if (tile.getName().equals("coin") && tile.isEnabled()) {
+            player.incScore();
+            tile.setEnabled(false);
+        }
+
         if (tile instanceof TileLava) {
             player.takeDamage();
         } else {
@@ -103,13 +110,5 @@ public class PlayerMoveComponent extends Component {
         }
     }
 
-    private void onCollideWith(Entity entity) {
-        if (entity!= null) {
-            if (entity.getName().equals("coin")) {
-//                entity.setEnabled(false);
-                System.out.println("got it!");
-            }
-        }
-    }
 
 }

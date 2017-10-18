@@ -1,6 +1,7 @@
 package ruben.jpixel.engine.graphics;
 
 import ruben.jpixel.engine.entity.Entity;
+import ruben.jpixel.engine.math.Vec2;
 import ruben.jpixel.engine.tile.Tile;
 
 import java.awt.*;
@@ -39,18 +40,19 @@ public class Screen {
     }
 
     public void draw(Entity entity){
+        IDrawable drawable = entity.getSprite();
 
-//        int xp = entity.getPosition().x - camera.getX();
-//        int yp = entity.getPosition().y - camera.getY();
-//        for (int y = 0; y < drawable.getHeight(); y++) {
-//            int ya = y + yp;
-//            for (int x = 0; x < drawable.getWidth(); x++) {
-//                int xa = x + xp;
-//                if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
-//                int col = drawable.getPixel()[x + y * drawable.getWidth()];
-//                if (col != ALPHA_COL) pixels[xa + ya * width] = col;
-//            }
-//        }
+        int xp = entity.getPosition().x - camera.getX();
+        int yp = entity.getPosition().y - camera.getY();
+        for (int y = 0; y < drawable.getHeight(); y++) {
+            int ya = y + yp;
+            for (int x = 0; x < drawable.getWidth(); x++) {
+                int xa = x + xp;
+                if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
+                int col = drawable.getPixel()[x + y * drawable.getWidth()];
+                if (col != ALPHA_COL) pixels[xa + ya * width] = col;
+            }
+        }
     }
 
     public void draw(Tile tile) {
@@ -64,9 +66,24 @@ public class Screen {
                 int xa = x + xp;
                 if (xa < -Tile.SIZE || xa >= width || ya < 0 || ya >= height) break;
                 if (xa < 0) xa = 0;
-                pixels[xa + ya * width] = drawable.getPixel()[x + y * Tile.SIZE];
+                int col = drawable.getPixel()[x + y * Tile.SIZE];
+                if (col != ALPHA_COL) pixels[xa + ya * width] = col;
             }
         }
+    }
+
+    public static void drawString(Vec2 position, String text, Font font, Color colour, Graphics g){
+        g.setColor(colour);
+        g.setFont(font);
+        g.drawString(text, position.x, position.y);
+    }
+
+    public static void drawString(Vec2 position, String text, Color colour,  Graphics g){
+        drawString(position, text, new Font("Verdan", Font.PLAIN, 40), colour, g);
+    }
+
+    public static void drawString(Vec2 position, String text,  Graphics g){
+        drawString(position, text, Color.DARK_GRAY, g);
     }
 
     public Camera getCamera() {
@@ -86,5 +103,4 @@ public class Screen {
             pixels[i] = colour;
         }
     }
-
 }

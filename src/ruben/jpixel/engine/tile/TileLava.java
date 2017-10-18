@@ -14,8 +14,8 @@ public class TileLava extends Tile {
     }
 
     @Override
-    public void update() {
-        lava.update();
+    public void update(float delta) {
+        lava.update(delta);
     }
 
     @Override

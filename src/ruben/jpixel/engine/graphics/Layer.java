@@ -3,6 +3,7 @@ package ruben.jpixel.engine.graphics;
 import ruben.jpixel.engine.core.IGameObject;
 import ruben.jpixel.engine.entity.Entity;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +20,12 @@ public class Layer {
         return camera;
     }
 
-    public void updateEntity() {
+    public void updateEntity(float delta) {
         for (int i = 0; i < entityStack.size(); i++) {
-            entityStack.get(i).update();
+            entityStack.get(i).update(delta);
         }
 
-        update();
+        update(delta);
     }
 
     public void renderEntity(Screen screen) {
@@ -35,9 +36,18 @@ public class Layer {
         render(screen);
     }
 
-    public void update(){}
+    public void renderEntity(Graphics g) {
+        for (int i = 0; i < entityStack.size(); i++) {
+            entityStack.get(i).render(g);
+        }
+
+        render(g);
+    }
+
+    public void update(float delta){}
 
     public void render(Screen screen){}
+    public void render(Graphics g){}
 
     public void add(IGameObject object){
         entityStack.add(object);

@@ -2,18 +2,24 @@ package ruben.jpixel.engine.core;
 
 import ruben.jpixel.engine.graphics.Screen;
 import ruben.jpixel.engine.input.Input;
+import ruben.jpixel.engine.level.Level;
+import ruben.jpixel.sandbox.EntityPlayer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CoreEngine extends Canvas{
 
     public static int WIDTH = 300;
     public static int HEIGHT = WIDTH / 16 * 9;
     public static int SCALE = 3;
+    public static boolean WIN = false;
+    public static boolean LOSS = false;
 
     private boolean isRunning = false;
     private IGame game;
@@ -22,9 +28,14 @@ public class CoreEngine extends Canvas{
     private JFrame frame;
     private String title;
 
+    private int timer = 60 * 61;
+
+    private double frameTime;
+
     private Screen screen;
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+    private boolean LOSS_TIME = false;
 
     public CoreEngine(String title, IGame game){
         this.title = title;
@@ -46,40 +57,59 @@ public class CoreEngine extends Canvas{
         frame.add(this);
 
         this.game = game;
+
+        frameTime = 1.0/60;
     }
 
     public void start(){
+        int frames = 0;
+        double frameCounter = 0;
+
         init();
 
-        long lastTime = System.nanoTime();
-        long timer = System.currentTimeMillis();
-        final double ns = 1000000000.0 / 60.0;
-        double delta = 0;
-        int frames = 0;
-        int updates = 0;
+        double lastTime = Time.getTime();
+        double unprocessedTime = 0;
+
         requestFocus();
 
         while (isRunning) {
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
-            lastTime = now;
-            while (delta >= 1) {
-                update();
-                updates++;
-                delta--;
-            }
-            render();
-            frames++;
+            if (!WIN && !LOSS) {
+                boolean render = false;
 
-            if (System.currentTimeMillis() - timer > 1000) {
-                timer += 1000;
-                System.out.println(updates + " ups, " + frames + " fps");
-                frame.setTitle(title + "  |  " + updates + " ups, " + frames + " fps");
-                updates = 0;
-                frames = 0;
+                double startTime = Time.getTime();
+                double passedTime = startTime - lastTime;
+                lastTime = startTime;
+
+                unprocessedTime += passedTime;
+                frameCounter += passedTime;
+
+                while (unprocessedTime > frameTime) {
+                    render = true;
+                    unprocessedTime -= frameTime;
+
+                    update((float) frameTime);
+                    if (frameCounter >= 1.0) {
+                        System.out.println(frames);
+                        frames = 0;
+                        frameCounter = 0;
+                    }
+                }
+                if (render) {
+                    if (timer <= 0){
+                        LOSS_TIME = true;
+                        timer = 0;
+                    }
+                    render();
+                    frames++;
+                } else {
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
-
     }
 
     private void init(){
@@ -89,11 +119,12 @@ public class CoreEngine extends Canvas{
         game.init();
     }
 
-    private void update(){
-        game.update();
+    private void update(float delta){
+        game.update(delta);
     }
 
     private void render(){
+        timer--;
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null){
             createBufferStrategy(3);
@@ -113,6 +144,37 @@ public class CoreEngine extends Canvas{
         }
 
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+
+        {
+            Font font = new Font("Verdan", Font.BOLD, 40);
+            g.setColor(Color.GREEN);
+            g.setFont(font);
+            g.drawString("Timer: " + timer / 60, 0, 50);
+            g.drawString("Coins remaining: " + Level.totalCoins, 0, 100);
+            g.drawString("Lives: " + EntityPlayer.lives, 0, 150);
+        }
+
+        game.render(g);
+        if (WIN){
+            Font font = new Font("Verdan", Font.BOLD, 40);
+            g.setColor(Color.BLUE);
+            g.setFont(font);
+            g.drawString("YOU WIN!", (getWidth() / 2) - 50, getHeight()/ 2);
+        }
+
+        if (LOSS_TIME){
+            Font font = new Font("Verdan", Font.BOLD, 40);
+            g.setColor(Color.RED);
+            g.setFont(font);
+            g.drawString("TIME RAN OUT!", (getWidth() / 2) - 100, getHeight()/ 2);
+        }
+
+        if (LOSS){
+            Font font = new Font("Verdan", Font.BOLD, 40);
+            g.setColor(Color.RED);
+            g.setFont(font);
+            g.drawString("YOU DIED!", (getWidth() / 2) - 100, getHeight()/ 2);
+        }
 
         g.dispose();
         bs.show();

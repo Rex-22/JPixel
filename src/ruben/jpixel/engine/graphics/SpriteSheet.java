@@ -97,7 +97,12 @@ public class SpriteSheet {
     private void load() {
         try {
             System.out.print("Trying to load: " + path + "...");
-            BufferedImage image = ImageIO.read(new File(Bitmap.class.getClassLoader().getResource("assets/"+path).getFile()));
+            BufferedImage image = null;
+            try {
+                image = ImageIO.read(new File("assets/" + path));
+            } catch (Exception e) {
+                image = ImageIO.read(Thread.currentThread().getContextClassLoader().getResource(path));
+            }
             System.out.println(" succeeded!");
             width = image.getWidth();
             height = image.getHeight();

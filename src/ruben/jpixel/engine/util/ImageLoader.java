@@ -6,6 +6,7 @@ import ruben.jpixel.engine.graphics.IImageLoader;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 
 public class ImageLoader implements IImageLoader {
 
@@ -16,7 +17,12 @@ public class ImageLoader implements IImageLoader {
     public int[] LoadImage(String path) {
         int[] pixels = null;
         try{
-            BufferedImage image = ImageIO.read(new File(Bitmap.class.getClassLoader().getResource("assets/"+path).getFile()));
+            BufferedImage image = null;
+            try {
+                image = ImageIO.read(new File("assets/" + path));
+            } catch (Exception e) {
+                image = ImageIO.read(Thread.currentThread().getContextClassLoader().getResource(path));
+            }
 
             width = image.getWidth();
             height = image.getHeight();

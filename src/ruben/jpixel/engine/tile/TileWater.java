@@ -14,8 +14,8 @@ public class TileWater extends Tile {
     }
 
     @Override
-    public void update() {
-        water.update();
+    public void update(float delta) {
+        water.update(delta);
     }
 
     @Override

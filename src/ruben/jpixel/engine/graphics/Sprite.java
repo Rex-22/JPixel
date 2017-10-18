@@ -47,6 +47,7 @@ public class Sprite extends Bitmap {
         SIZE = (width == height) ? width : -1;
         this.width = width;
         this.height = height;
+        this.pixels = new int[width * height];
         this.sheet = sheet;
         this.position = new Vec2();
     }

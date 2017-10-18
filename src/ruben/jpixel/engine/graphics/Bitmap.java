@@ -94,6 +94,19 @@ public class Bitmap implements IDrawable {
         return x * sin + y * cos;
     }
 
+    public boolean collision(Bitmap other){
+        Bitmap collision = new Bitmap(other.width, other.height);
+
+        for (int i = 0; i < collision.getPixel().length; i++) {
+            collision.pixels[i] = pixels[i];
+            if (collision.pixels[i] != 0xFFFF00FF && other.pixels[i] != 0xFFFF00FF){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public int[] getPixel() {
         return pixels;

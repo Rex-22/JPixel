@@ -12,7 +12,7 @@ public class CameraFollowComponent extends Component {
     }
 
     @Override
-    public void update() {
+    public void update(float delta) {
         camera.setPosition(
                 (parent.getPosition().x - CoreEngine.WIDTH / 2),
                 (parent.getPosition().y - CoreEngine.HEIGHT / 2));

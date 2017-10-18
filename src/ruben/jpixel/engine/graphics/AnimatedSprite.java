@@ -15,7 +15,7 @@ public class AnimatedSprite extends Sprite implements IDrawable {
         if (length > sheet.getSprites().length) System.err.println("Error! Length of animation is too long!");
     }
 
-    public void update() {
+    public void update(float delta) {
         time++;
         if (time % rate == 0) {
             if (frame >= length - 1) frame = 0;

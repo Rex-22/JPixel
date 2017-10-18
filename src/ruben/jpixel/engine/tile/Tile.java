@@ -7,6 +7,8 @@ import ruben.jpixel.engine.graphics.Sprite;
 import ruben.jpixel.engine.level.Level;
 import ruben.jpixel.engine.math.Vec2;
 
+import java.awt.*;
+
 public class Tile implements IGameObject {
 
     /** This is the tile size for the game, it is not meant to change*/
@@ -17,6 +19,7 @@ public class Tile implements IGameObject {
     private Level level;
     private boolean solid = false;
     private String name;
+    private boolean enabled = true;
 
     public Tile(TilePosition position, Sprite sprite, String name) {
         this.position = position;
@@ -25,13 +28,17 @@ public class Tile implements IGameObject {
     }
 
     @Override
-    public void update() {
-        sprite.setPosition(position.getPosition());
+    public void update(float delta) {
+        if (enabled) sprite.setPosition(position.getPosition());
     }
 
     @Override
     public void render(Screen screen) {
-        screen.draw(this);
+        if (enabled) screen.draw(this);
+    }
+
+    @Override
+    public void render(Graphics g) {
     }
 
     @Override
@@ -60,5 +67,13 @@ public class Tile implements IGameObject {
 
     public String getName() {
         return name;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 }
