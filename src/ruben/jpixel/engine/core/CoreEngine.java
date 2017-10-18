@@ -95,10 +95,6 @@ public class CoreEngine extends Canvas{
                     }
                 }
                 if (render) {
-                    if (timer <= 0){
-                        LOSS_TIME = true;
-                        timer = 0;
-                    }
                     render();
                     frames++;
                 } else {
@@ -108,6 +104,8 @@ public class CoreEngine extends Canvas{
                         e.printStackTrace();
                     }
                 }
+            } else {
+                render();
             }
         }
     }
@@ -125,6 +123,10 @@ public class CoreEngine extends Canvas{
 
     private void render(){
         timer--;
+        if (timer <= 0) {
+            timer = 0;
+            LOSS_TIME = true;
+        }
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null){
             createBufferStrategy(3);
@@ -136,45 +138,85 @@ public class CoreEngine extends Canvas{
         g.setColor(new Color(0x4c4c4c));
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        screen.clear();
-        game.render(screen);
+        if (LOSS != true && WIN != true && LOSS_TIME != true) {
+            screen.clear();
+            game.render(screen);
 
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = screen.pixels[i];
+            for (int i = 0; i < pixels.length; i++) {
+                pixels[i] = screen.pixels[i];
+            }
+
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+
+            {
+                Font font = new Font("Verdan", Font.BOLD, 40);
+                g.setColor(Color.GREEN);
+                g.setFont(font);
+                g.drawString("Timer: " + timer / 60, 0, 50);
+                g.drawString("Coins remaining: " + Level.totalCoins, 0, 100);
+                g.drawString("Lives: " + EntityPlayer.lives, 0, 150);
+            }
+        }else{
+            for (int i = 0; i < pixels.length; i++) {
+                pixels[i] = screen.pixels[i];
+            }
+
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+
+            {
+                Font font = new Font("Verdan", Font.BOLD, 40);
+                g.setColor(Color.GREEN);
+                g.setFont(font);
+                g.drawString("Timer: " + timer / 60, 0, 50);
+                g.drawString("Coins remaining: " + Level.totalCoins, 0, 100);
+                g.drawString("Lives: " + EntityPlayer.lives, 0, 150);
+            }
+
+            if (WIN){
+                timer = timer + 1;
+
+                screen.clear();
+                game.render(screen);
+
+                for (int i = 0; i < pixels.length; i++) {
+                    pixels[i] = screen.pixels[i];
+                }
+
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+
+
+                {
+                    Font font = new Font("Verdan", Font.BOLD, 40);
+                    g.setColor(Color.GREEN);
+                    g.setFont(font);
+                    g.drawString("Timer: " + timer / 60, 0, 50);
+                    g.drawString("Coins remaining: " + Level.totalCoins, 0, 100);
+                    g.drawString("Lives: " + EntityPlayer.lives, 0, 150);
+                }
+
+                Font font = new Font("Verdan", Font.BOLD, 40);
+                g.setColor(Color.BLUE);
+                g.setFont(font);
+                g.drawString("YOU WIN!", (getWidth() / 2) - 50, getHeight()/ 2);
+            }
+
+            if (LOSS_TIME){
+                Font font = new Font("Verdan", Font.BOLD, 40);
+                g.setColor(Color.RED);
+                g.setFont(font);
+                g.drawString("TIME RAN OUT!", (getWidth() / 2) - 100, getHeight()/ 2);
+            }
+
+            if (LOSS){
+                timer = timer + 1;
+                Font font = new Font("Verdan", Font.BOLD, 40);
+                g.setColor(Color.RED);
+                g.setFont(font);
+                g.drawString("YOU DIED!", (getWidth() / 2) - 100, getHeight()/ 2);
+            }
+
         }
-
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-
-        {
-            Font font = new Font("Verdan", Font.BOLD, 40);
-            g.setColor(Color.GREEN);
-            g.setFont(font);
-            g.drawString("Timer: " + timer / 60, 0, 50);
-            g.drawString("Coins remaining: " + Level.totalCoins, 0, 100);
-            g.drawString("Lives: " + EntityPlayer.lives, 0, 150);
-        }
-
         game.render(g);
-        if (WIN){
-            Font font = new Font("Verdan", Font.BOLD, 40);
-            g.setColor(Color.BLUE);
-            g.setFont(font);
-            g.drawString("YOU WIN!", (getWidth() / 2) - 50, getHeight()/ 2);
-        }
-
-        if (LOSS_TIME){
-            Font font = new Font("Verdan", Font.BOLD, 40);
-            g.setColor(Color.RED);
-            g.setFont(font);
-            g.drawString("TIME RAN OUT!", (getWidth() / 2) - 100, getHeight()/ 2);
-        }
-
-        if (LOSS){
-            Font font = new Font("Verdan", Font.BOLD, 40);
-            g.setColor(Color.RED);
-            g.setFont(font);
-            g.drawString("YOU DIED!", (getWidth() / 2) - 100, getHeight()/ 2);
-        }
 
         g.dispose();
         bs.show();
