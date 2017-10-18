@@ -15,6 +15,10 @@ public class Layer {
         entityStack = new ArrayList<>();
     }
 
+    public static Camera getCamera() {
+        return camera;
+    }
+
     public void updateEntity() {
         for (int i = 0; i < entityStack.size(); i++) {
             entityStack.get(i).update();

@@ -2,7 +2,6 @@ package ruben.jpixel.engine.graphics;
 
 import org.joml.Rectanglef;
 import ruben.jpixel.engine.entity.Entity;
-import ruben.jpixel.engine.math.Vec2;
 import ruben.jpixel.engine.tile.Tile;
 
 import java.awt.*;
@@ -26,7 +25,7 @@ public class Screen {
         this.camera = camera;
     }
 
-    public void draw(int xpos, int ypos, IDrawable drawable){
+    public void draw(int xpos, int ypos, IDrawable drawable) {
         int xp = xpos - camera.getX();
         int yp = ypos - camera.getY();
         for (int y = 0; y < drawable.getHeight(); y++) {
@@ -40,9 +39,8 @@ public class Screen {
         }
     }
 
-    public void draw(Entity entity){
+    public void draw(Entity entity) {
         IDrawable drawable = entity.getSprite();
-
         int xp = entity.getPosition().x - camera.getX();
         int yp = entity.getPosition().y - camera.getY();
         for (int y = 0; y < drawable.getHeight(); y++) {
@@ -81,7 +79,7 @@ public class Screen {
     }
 
     public void clear() {
-       clear(0x4c4c4c);
+        clear(0x4c4c4c);
     }
 
     public void clear(int colour) {
@@ -90,23 +88,18 @@ public class Screen {
         }
     }
 
-    public void drawRect(Rectangle rectangle) {
-        for (int x = rectangle.x; x < rectangle.width; x++) {
-            for (int y = rectangle.y; y < rectangle.height; y++) {
-                pixels[x + y * width] = 0xff00ff;
+    public void drawRect(Rectanglef collisionBox) {
+        int xp = (int)collisionBox.minX - camera.getX();
+        int yp = (int)collisionBox.minY - camera.getY();
+        for (int y = (int)collisionBox.minY; y < collisionBox.maxY; y++) {
+            int ya = y + yp;
+            for (int x = (int)collisionBox.minX; x < collisionBox.maxX; x++) {
+                int xa = x + xp;
+                if (xa < 0 || xa >= width || ya < 0 || ya >= height)
+                    continue;
+                int col = 0xFF00FF00;
+                pixels[xa + ya * width] = col;
             }
         }
-    }
-
-    public void drawRect(int minxa, int minya, int maxxa, int maxya) {
-        for (int x = minxa; x < maxxa; x++) {
-            for (int y = minya; y < maxya; y++) {
-                pixels[(x - camera.getX()) + (y - camera.getY()) * width] = 0xff00ff;
-            }
-        }
-    }
-
-    public void drawRect(Rectanglef rect) {
-        drawRect((int)rect.minX, (int)rect.minY, (int)rect.maxX, (int)rect.maxY);
     }
 }

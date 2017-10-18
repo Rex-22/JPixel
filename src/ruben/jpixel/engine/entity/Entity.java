@@ -1,49 +1,49 @@
 package ruben.jpixel.engine.entity;
 
-import org.joml.AABBf;
 import org.joml.Rectanglef;
 import ruben.jpixel.engine.component.Component;
+import ruben.jpixel.engine.component.SpriteRendererComponent;
 import ruben.jpixel.engine.core.IGameObject;
-import ruben.jpixel.engine.graphics.Bitmap;
 import ruben.jpixel.engine.graphics.Screen;
+import ruben.jpixel.engine.graphics.Sprite;
 import ruben.jpixel.engine.level.Level;
+import ruben.jpixel.engine.math.BoundingBox;
 import ruben.jpixel.engine.math.Vec2;
 import ruben.jpixel.engine.tile.Tile;
 import ruben.jpixel.engine.tile.TilePosition;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Entity implements IGameObject {
 
     private Vec2 position;
-    private Bitmap sprite;
     private Level level;
 
     private List<Component> componentStack;
     private String name;
 
-    private Rectanglef boundingBox;
+    private BoundingBox boundingBox;
+
     private boolean enabled = true;
+    public Sprite sprite;
 
-    public Entity(Vec2 position, Bitmap sprite, String name){
+
+    public Entity(Vec2 position, String name, Sprite sprite) {
         this.position = position;
-        this.sprite = sprite;
         this.name = name;
-
-        boundingBox = new Rectanglef(position.x,position.y, sprite.getWidth(),sprite.getHeight());
-
+        this.sprite = sprite;
         componentStack = new ArrayList<>();
+        boundingBox = new BoundingBox(
+                position.x, position.y,
+                sprite.getWidth(), sprite.getHeight());
+        if (!name.equals("player"))
+        add(new SpriteRendererComponent(sprite));
     }
 
-    public Entity(Vec2 position, String name) {
-        this(position, new Bitmap(16, 16), name);
-    }
-
-    public Entity(String name){
-        this(new Vec2(0, 0), new Bitmap(16, 16), name);
-    }
+    public Entity(String name, Sprite sprite) {
+        this(new Vec2(0, 0), name, sprite);
+     }
 
     public void updateEntity() {
 
@@ -55,33 +55,30 @@ public class Entity implements IGameObject {
 
     @Override
     public void update() {
-        for (int i = 0; i < componentStack.size(); i++) {
-            componentStack.get(i).update();
+        if (this.isEnabled()) {
+            boundingBox.update(position, sprite.getWidth(), sprite.getHeight());
+            for (int i = 0; i < componentStack.size(); i++) {
+                componentStack.get(i).update();
+            }
+
+            updateEntity();
         }
-
-        sprite.setPosition(position);
-
-        boundingBox.minX = position.x;
-        boundingBox.minY = position.y;
-        boundingBox.maxX = position.x + sprite.getWidth();
-        boundingBox.maxY = position.y + sprite.getHeight();
-
-        updateEntity();
     }
 
     @Override
     public void render(Screen screen) {
-        for (int i = 0; i < componentStack.size(); i++) {
-            componentStack.get(i).render(screen);
-        }
         if (isEnabled()) {
-            screen.draw(this);
-        }
+            for (int i = 0; i < componentStack.size(); i++) {
+                componentStack.get(i).render(screen);
+            }
 
-        renderEntity(screen);
+            renderEntity(screen);
+        } else if (name.equals("player")){
+            renderEntity(screen);
+        }
     }
 
-    public void add(Component component){
+    public void add(Component component) {
         componentStack.add(component);
         component.setParent(this);
     }
@@ -93,10 +90,6 @@ public class Entity implements IGameObject {
     @Override
     public TilePosition getTilePosition() {
         return new TilePosition(position.div(Tile.SIZE));
-    }
-
-    public Bitmap getSprite() {
-        return sprite;
     }
 
     public void setLevel(Level level) {
@@ -111,15 +104,19 @@ public class Entity implements IGameObject {
         return name;
     }
 
-    public Rectanglef getBoundingBox() {
-        return boundingBox;
-    }
-
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    public BoundingBox getBoundingBox() {
+        return boundingBox;
     }
 }

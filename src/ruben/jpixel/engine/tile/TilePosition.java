@@ -7,7 +7,7 @@ public class TilePosition {
     private Vec2 position;
 
     public TilePosition(Vec2 position) {
-        this.position = position.mulLocal(Tile.SIZE);
+        this.position = position.mul(Tile.SIZE);
     }
 
     public Vec2 getPosition() {
@@ -15,7 +15,7 @@ public class TilePosition {
     }
 
     public void setPosition(Vec2 position) {
-        this.position = position.mulLocal(Tile.SIZE);
+        this.position = position.mul(Tile.SIZE);
     }
 
 }

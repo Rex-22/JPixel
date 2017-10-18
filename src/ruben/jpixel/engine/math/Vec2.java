@@ -103,4 +103,13 @@ public class Vec2 {
 
         return other;
     }
+
+    public Vec2 mul(int amt) {
+        Vec2 other = new Vec2(x, y);
+
+        other.x *= amt;
+        other.y *= amt;
+
+        return other;
+    }
 }
