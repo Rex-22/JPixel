@@ -26,7 +26,7 @@ public class CoreEngine extends Canvas{
     private JFrame frame;
     private String title;
 
-    private int timer = 60 * 61;
+    private int timer = 60 * 121;
 
     private double frameTime;
 

@@ -23,4 +23,9 @@ public class TileWater extends Tile {
         Sprite sprite = water.getSprite();
         screen.draw(getPosition().x, getPosition().y, sprite);
     }
+
+    @Override
+    public boolean isSolid() {
+        return true;
+    }
 }
