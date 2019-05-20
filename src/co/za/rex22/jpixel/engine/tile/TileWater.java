@@ -1,0 +1,31 @@
+package co.za.rex22.jpixel.engine.tile;
+
+import co.za.rex22.jpixel.engine.graphics.AnimatedSprite;
+import co.za.rex22.jpixel.engine.graphics.Screen;
+import co.za.rex22.jpixel.engine.graphics.Sprite;
+import co.za.rex22.jpixel.engine.graphics.SpriteSheet;
+
+public class TileWater extends Tile {
+
+    private AnimatedSprite water = new AnimatedSprite(SpriteSheet.water_anim, 16, 16, 4);
+
+    public TileWater(TilePosition position) {
+        super(position, null, "water");
+    }
+
+    @Override
+    public void update(float delta) {
+        water.update(delta);
+    }
+
+    @Override
+    public void render(Screen screen) {
+        Sprite sprite = water.getSprite();
+        screen.draw(getPosition().x, getPosition().y, sprite);
+    }
+
+    @Override
+    public boolean isSolid() {
+        return true;
+    }
+}

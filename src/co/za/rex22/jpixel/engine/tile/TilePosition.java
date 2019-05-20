@@ -1,0 +1,21 @@
+package co.za.rex22.jpixel.engine.tile;
+
+import co.za.rex22.jpixel.engine.math.Vec2;
+
+public class TilePosition {
+
+    private Vec2 position;
+
+    public TilePosition(Vec2 position) {
+        this.position = position.mul(Tile.SIZE);
+    }
+
+    public Vec2 getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vec2 position) {
+        this.position = position.mul(Tile.SIZE);
+    }
+
+}
